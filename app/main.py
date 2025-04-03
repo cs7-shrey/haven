@@ -1,5 +1,5 @@
 from . import models
-from . import models
+from . import schemas
 from .database import engine, get_db
 from app.routes import search, constants, voice_search, user, hotel, voice, room, cpkit
 from copilotkit.integrations.fastapi import add_fastapi_endpoint
@@ -55,3 +55,8 @@ async def test_hotel(db: Session = Depends(get_db)):
 @app.get('/protected')
 async def protected_route(token_data: dict = Depends(get_current_client)):
     return {"message": "You are under protected"}
+
+@app.get('/health', response_model=list[schemas.HealthCheckResponse])
+async def health_check(db: Session = Depends(get_db)):
+    hotel_amenities = db.query(models.HotelAmenity).all()
+    return hotel_amenities

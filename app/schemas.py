@@ -144,3 +144,7 @@ class BookingDetails(BaseModel):
     hotel: dict
     room_type: dict
     rate_plan: dict
+
+class HealthCheckResponse(BaseModel):
+    name: str
+    code: str
