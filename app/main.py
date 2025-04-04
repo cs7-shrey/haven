@@ -12,7 +12,6 @@ from sqlalchemy.orm import Session
 import os
 
 load_dotenv()
-# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
