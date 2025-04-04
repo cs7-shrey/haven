@@ -1,16 +1,15 @@
 from . import models
 from . import schemas
-from .database import engine, get_db
+from .database import get_db
 from app.routes import search, constants, voice_search, user, hotel, voice, room, cpkit
 from copilotkit.integrations.fastapi import add_fastapi_endpoint
 from app.oauth2 import get_current_client
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+import httpx
 from sqlalchemy.orm import Session
 import os
-import time
-import wave
 
 load_dotenv()
 # models.Base.metadata.create_all(bind=engine)
@@ -48,7 +47,6 @@ async def read_root():
 
 @app.get("/test_hotel")
 async def test_hotel(db: Session = Depends(get_db)):
-    # get 10 rows from table hotel
     hotels = db.query(models.Hotel).limit(10).all()
     return hotels
 
@@ -59,4 +57,9 @@ async def protected_route(token_data: dict = Depends(get_current_client)):
 @app.get('/health', response_model=list[schemas.HealthCheckResponse])
 async def health_check(db: Session = Depends(get_db)):
     hotel_amenities = db.query(models.HotelAmenity).all()
+    try:
+        async with httpx.AsyncClient() as client:
+            await client.get(os.getenv('PARENT_URL'))
+    except Exception as e:
+        print("Exception occured while hitting parent URL", e)
     return hotel_amenities
