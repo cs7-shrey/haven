@@ -21,7 +21,6 @@ origins = [
 ]
 print(os.getenv("BASE_FRONTEND_URL"), os.getenv("BASE_FRONTEND_DOMAIN"))
 
-# TODO: Change this to the actual frontend URL
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
