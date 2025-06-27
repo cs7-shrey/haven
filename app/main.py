@@ -16,7 +16,7 @@ load_dotenv()
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:5173", "http://localhost:3000",
     os.getenv("BASE_FRONTEND_URL")
 ]
 print(os.getenv("BASE_FRONTEND_URL"), os.getenv("BASE_FRONTEND_DOMAIN"))
