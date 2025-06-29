@@ -107,7 +107,7 @@ export default function Hotels() {
     return (
         <div className="relative"
         >
-            <nav className="bg-accent px-4 sm:sticky sm:top-0 z-50">
+            <nav className="bg-primary px-4 sm:sticky sm:top-0 z-50">
                 <TopBar />
             </nav>
             <div className="relative lg:relative sm:flex md:grid md:grid-cols-12 px-4 sm:px-8 bg-[#EFF3F8] min-h-screen"               /*bg-[#EFF3F8] */
@@ -116,7 +116,7 @@ export default function Hotels() {
                     <div className="p-4 relative z-20">
                         <button
                             onClick={filtersClick}
-                            className="relative z-30 flex gap-2 px-4 items-center bg-accentForeground p-2 rounded-md text-primary"
+                            className="relative z-30 flex gap-2 px-4 items-center bg-secondary p-2 rounded-md text-primary"
                         >
                             <SlidersHorizontal size={18} strokeWidth={2} color="white" />
                             Filters

@@ -11,7 +11,7 @@ const SearchButton = () => {
     const router = useRouter()
     return (
         <button
-            className="flex h-full w-full justify-center items-center px-4 py-2 text-white bg-accentForeground"
+            className="flex h-full w-full justify-center items-center px-4 py-2 text-white bg-secondary"
             onClick={(e) => {
                 e.preventDefault();
                 setInfoMessage('')

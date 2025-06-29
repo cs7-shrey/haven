@@ -6,7 +6,7 @@ import { useSearchStore } from "../store/useSearchStore"
 import { useHotelDescStore } from "@/store/useHotelDescStore"
 
 export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs))
 }
 
 export async function getConstants(type: "property_type" | "hotel_amenity" | "room_amenity"): Promise<Amenity[]> {

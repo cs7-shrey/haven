@@ -93,10 +93,10 @@ const Booking = () => {
     }
     return (
         <div className='relative flex flex-col z-10 bg-primary/80'>
-            <div className='m-4 z-30 bg-accent'>
+            <div className='m-4 z-30 bg-primary'>
                 <Logo />
             </div>
-            <div className='absolute top-0 left-0 h-[40vh] w-full bg-accent z-20'>
+            <div className='absolute top-0 left-0 h-[40vh] w-full bg-primary z-20'>
             </div>
             <div className='flex z-30 justify-between max-w-full gap-4 mt-20 mx-8'>
                 <div className='w-[50%] bg-primary rounded-lg p-4 shadow-md'>

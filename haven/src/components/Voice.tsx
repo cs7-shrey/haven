@@ -139,7 +139,7 @@ const Voice = () => {
     };
 
     return (
-        <div className="flex justify-center bg-primary w-fit h-fit py-2 rounded-md">
+        <div className="flex justify-center bg-background w-fit h-fit py-2 rounded-md">
             <div className="self-center rounded-md">
                 <button onClick={toggleStreaming}>
                     <div className="h-12 w-16 rounded-full flex flex-col justify-start items-center" id="container">

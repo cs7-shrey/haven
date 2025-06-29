@@ -172,7 +172,7 @@ const GoogleMaps = () => {
 
     return (
         <div className='w-full h-full relative z-40'>
-            <APIProvider apiKey={import.meta.env.VITE_MAPS_FRONTEND_API_KEY}>
+            <APIProvider apiKey={process.env.NEXT_PUBLIC_MAPS_FRONTEND_API_KEY}>
                 <Map
                     defaultZoom={zoom}
                     defaultCenter={defaultCenter}

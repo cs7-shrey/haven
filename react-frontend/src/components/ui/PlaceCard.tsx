@@ -21,7 +21,7 @@ const PlaceCard: React.FC<Props> = ({name, address, imageURL, googleMapsLink}) =
                     <div className='text-sm text-gray-500'>
                         <p>{address}</p>
                     </div>
-                    <div className='mt-2 w-[30%] bg-accent text-center text-primary px-2 py-1 rounded-md'>
+                    <div className='mt-2 w-[30%] bg-primary text-center text-primary px-2 py-1 rounded-md'>
                         <a href={googleMapsLink} target='_blank' className='font-[1rem]'>
                             visit
                         </a>

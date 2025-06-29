@@ -95,7 +95,7 @@ const Form: React.FC<FormProps> = ({ type, typeText}) => {
                     </div>
                     <div className="mx-auto my-2 w-full">
                         <button 
-                            className="relative bg-accent text-white p-2 rounded-md w-full" onClick={onSubmit}
+                            className="relative bg-primary text-white p-2 rounded-md w-full" onClick={onSubmit}
                             disabled={isSigningUp || isLoggingIn}
                     >
                             {typeText}

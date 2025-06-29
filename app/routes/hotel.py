@@ -29,7 +29,6 @@ async def get_hotel_rooms(id: int, db: Session = Depends(get_db), current_user: 
 async def book_hotel_route(booking_details: BookHotelSchema, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
     # checking details
     res = check_booking_detail_validity(db, int(booking_details.hotel_id), booking_details.room_type_id, booking_details.rate_plan_id)
-    print('yele', res)
     if not res:
         raise HTTPException(status_code=400, detail="Invalid booking details")
     # book the hotel 

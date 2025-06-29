@@ -48,7 +48,7 @@ const RoomOffer: React.FC<Props> = (ratePlan) => {
                 </p>
                 <button className="mt-[7.5%] py-2 min-h-[40px] w-full md:w-[80%] lg:w-[60%] rounded-lg flex items-center justify-center 
               font-bold p-2
-              bg-accent text-white text-xs md:text-[0.75rem] lg:text-[0.8rem]
+              bg-primary text-white text-xs md:text-[0.75rem] lg:text-[0.8rem]
               sm:mt-[4%]"
                 onClick={handleClick}
                 >

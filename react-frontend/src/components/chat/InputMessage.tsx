@@ -84,7 +84,7 @@ const InputMessage = () => {
           <Voice />
                 }
                 <button>
-                    <div className={`rounded-full ${userMessage.length == 0 ? 'bg-[#F1F2F2]' : 'bg-accentForeground'} pl-2 pr-[0.6rem] py-[0.55rem]`}>
+                    <div className={`rounded-full ${userMessage.length == 0 ? 'bg-[#F1F2F2]' : 'bg-secondary'} pl-2 pr-[0.6rem] py-[0.55rem]`}>
                         <Send size={18} color={`${userMessage.length == 0 ? '#656D75' : 'white'}`}/>
                     </div>
                 </button>

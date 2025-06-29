@@ -5,7 +5,7 @@ import { useTempFilterStore } from "@/store/useTempFilterStore";
 import { formatDate, stateInitUsingQueryParams } from "@/lib/utils";
 import HotelAmenityFilter from "./filterComponents/HotelAmenityFilter";
 import HotelStarFilter from "./filterComponents/HotelStarFilter";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/router";
 import UserRatingFilter from "./filterComponents/UserRatingFilter";
 import RoomAmenityFilter from "./filterComponents/RoomAmenityFilter";
 import HotelPriceFilter from "./filterComponents/HotelPriceFilter";
@@ -29,7 +29,7 @@ const Filters: React.FC<Props> = ({ filterIconClick }) => {
         setHotelAmenities,
         setRoomAmenities,
     } = useSearchStore();
-    const navigate = useNavigate();
+    const router = useRouter()
     const {
         tempMinBudget,
         tempMaxBudget,
@@ -65,8 +65,7 @@ const Filters: React.FC<Props> = ({ filterIconClick }) => {
             hotelAmenities: tempHotelAmenities,
             roomAmenities: tempRoomAmenities,
         })
-        navigate(`/hotels?q=${queryTerm.place}&type=${queryTerm.type}&filters=${filterString}&proximityCoordinate${JSON.stringify(proximityCoordinate)}`);
-        // const [searchParams] = useSearchParams();
+        router.push(`/hotels?q=${queryTerm.place}&type=${queryTerm.type}&filters=${filterString}&proximityCoordinate${JSON.stringify(proximityCoordinate)}`);
         const searchParams = new URLSearchParams(window.location.search);
         stateInitUsingQueryParams(searchParams);
     }

@@ -68,7 +68,7 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
                         {/* <div className="text-4xl font-[900]">
                 {userRating}<span className="text-medium font-normal text-secondary/60">/5</span>
             </div> */}
-                        <div className="p-2 text-primary bg-accent rounded-md">
+                        <div className="p-2 text-primary bg-primary rounded-md">
                             {userRating}
                         </div>
                     </div>
@@ -124,7 +124,7 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
                         </div>
                         <a href="#room-options">
                             <button
-                                className="bg-accent text-primary hover:bg-accent/90 font-bold py-2 px-4 w-full rounded-md text-[0.8rem] md:text-sm lg:text-[0.9rem]" 
+                                className="bg-primary text-primary hover:bg-primary/90 font-bold py-2 px-4 w-full rounded-md text-[0.8rem] md:text-sm lg:text-[0.9rem]" 
                             >
                 VIEW {nRoomOptions} ROOM OPTIONS
 

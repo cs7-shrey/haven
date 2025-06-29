@@ -65,8 +65,8 @@ class Place(BaseModel):
     type: str
     
 class DateFilters(BaseModel):
-    check_in: Optional[str] = (datetime.date.today() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
-    check_out: Optional[str] = (datetime.date.today() + datetime.timedelta(days=2)).strftime('%Y-%m-%d')
+    check_in: Optional[datetime.datetime] = (datetime.date.today() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+    check_out: Optional[datetime.datetime] = (datetime.date.today() + datetime.timedelta(days=2)).strftime('%Y-%m-%d')
     
 class BudgetFilters(BaseModel):
     min_budget: Optional[int] = 0
