@@ -1,17 +1,34 @@
 // import { useNavigate } from 'react-router';
-import SearchDropdown from './SearchDropdown';
+import SearchDropdown from '../SearchDropdown';
 // import { useSearchStore } from '@/store/useSearchStore';
 // import { formatDate } from '@/lib/utils';
 // import { ArrowRight } from 'lucide-react';
-import SearchButton from './search/SearchButton';
-import CheckInOut from './search/CheckInOut';
+import SearchButton from './ui/SearchButton';
+import { Check } from './ui/CheckInOut';
 import Voice from '@/components/Voice';
-import LanguageButton from './search/LanguageButton';
+import LanguageButton from './ui/LanguageButton';
+import { useSocketStore } from '@/store/useSocketStore';
+import { useSearchStore } from '@/store/useSearchStore';
+import { useHotelStore } from '@/store/useHotelStore';
+import { useRouter } from 'next/navigation';
+import { formatDate } from '@/lib/utils';
+
 
 
 const SearchBar = () => {
-  // const { queryTerm, checkIn, checkOut, setCheckIn, setCheckOut } = useSearchStore();
-  // const navigate = useNavigate();
+  const {lang, setLang} = useSocketStore()
+  const { setInfoMessage } = useHotelStore();
+  const { queryTerm,  checkIn, setCheckIn, checkOut, setCheckOut } = useSearchStore();
+
+  const router = useRouter()
+  
+  const onSearchButtonClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      setInfoMessage('')
+      if (!queryTerm.place || !queryTerm.type) return;
+      router.push(`/hotels?q=${encodeURIComponent(queryTerm.place)}&type=${queryTerm.type}&checkIn=${formatDate(checkIn)}&checkOut=${formatDate(checkOut)}`);
+  }
+
   return (
     <>
       <div className='flex flex-col md:flex-row bg-white rounded-md'>
@@ -21,7 +38,7 @@ const SearchBar = () => {
             <Voice />
           </div>
           <div className='border-r-2 flex justify-center items-center'>
-            <LanguageButton />
+            <LanguageButton lang={lang} setLang={setLang}/>
           </div>
         </div>
         <div className='flex flex-col sm:flex-row items-end border-t-4 md:border-none'>   {/* height ok */}
@@ -35,15 +52,12 @@ const SearchBar = () => {
           {/* checkin-checkout-search-button */}
           <div className='flex sm:items-start md:items-end flex-col md:flex-row h-full border-t-2 border-l-0 sm:border-l-4 md:border-l-2 md:border-t-0'>
             <div className='flex gap-2 sm:flex-row h-full pl-1' id='checkInCheckOut'>
-              <CheckInOut />
+              <Check check={checkIn} setCheck={setCheckIn} label="Check-in" />
+              <Check check={checkOut} setCheck={setCheckOut} label="Check-out" />
             </div>
             <div className='w-full h-full md:rounded-r-md'>
-              <SearchButton />
+              <SearchButton onClick={onSearchButtonClick}/>
             </div>
-            {/* <div className="text-white flex font-bold gap-1">
-                      Microphone
-                    <MicOff color="#3B5100"/>
-                  </div> */}
           </div>
         </div>
       </div>

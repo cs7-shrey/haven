@@ -1,17 +1,6 @@
 import { create } from 'zustand'
+import type { Hotel } from '@/types';
 
-export interface Hotel {
-    id: string;
-    name: string;
-    location: string;
-    base_fare?: number;
-    images?: string[];
-    hotel_star?: number;
-    user_rating?: number;
-    user_rating_count?: number;
-    latitude: number;
-    longitude: number;
-}
 interface HotelStore {
     hotels: Hotel[];
     fromVoice: boolean;

@@ -1,8 +1,9 @@
 "use client"
+
 import RecentSearches from "@/components/RecentSearches";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/search/SearchBar";
 import Logo from "@/components/ui/Logo";
-import Login from "@/components/auth/Login";
+// import Login from "@/components/auth/Login";
 import { HashLoader } from "react-spinners";
 import { useSocketStore } from "@/store/useSocketStore";
 // import SignUp from "@/components/auth/SignUp";

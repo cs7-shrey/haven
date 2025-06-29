@@ -2,12 +2,15 @@
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { Language } from '@/lib/language'
-import { useSocketStore } from '@/store/useSocketStore';
+import { Language } from '@/types';
 
-const LanguageButton = () => {
+interface Props {
+    lang: Language;
+    setLang: (lang: Language) => void;
+}
+const LanguageButton: React.FC<Props> = ({lang, setLang}) => {
     const [showDropdown, setShowDropdown] = useState(false);
-    const { lang, setLang} = useSocketStore();
+    // const { lang, setLang} = useSocketStore();
     return (
         <div className=''>
             <button 
@@ -21,7 +24,7 @@ const LanguageButton = () => {
                 {Object.keys(Language).map((lang, index) => (
                     <button 
                         key={index}
-                        className='bg-primary text-secondary rounded-md p-2 border-1'
+                        className='bg-background text-foreground rounded-md p-2 border-1'
                         onClick={() => {
                             setLang(Language[lang as keyof typeof Language])
                             setShowDropdown(false);

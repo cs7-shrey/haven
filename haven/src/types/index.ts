@@ -1,3 +1,19 @@
+export interface Hotel {
+    id: string;
+    name: string;
+    location: string;
+    base_fare?: number;
+    images?: string[];
+    hotel_star?: number;
+    user_rating?: number;
+    user_rating_count?: number;
+    latitude: number;
+    longitude: number;
+}
+export enum Language {
+    English = "en",
+    Hindi = "hi"
+}
 export interface SearchHotelParams {
     place: Place;
     checkIn: Date;

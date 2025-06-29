@@ -17,8 +17,6 @@ export default function useHotelSearch({ onError } : Params) {
     const { setHotels } = useHotelStore.getState();
     const searchParams = useSearchParams()
 
-
-
     useEffect(() => {
         const handleError = (err: unknown) => { console.error(err);
             let errorMessage = "An unexpected error occured";

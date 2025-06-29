@@ -1,6 +1,6 @@
 
 import Logo from './ui/Logo';
-import SearchBar from './SearchBar';
+import SearchBar from './search/SearchBar';
 import Logout from './auth/Logout';
 const TopBar = () => {
   return (
