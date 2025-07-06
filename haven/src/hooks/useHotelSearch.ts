@@ -18,11 +18,12 @@ export default function useHotelSearch({ onError } : Params) {
     const searchParams = useSearchParams()
 
     useEffect(() => {
-        const handleError = (err: unknown) => { console.error(err);
+        const handleError = (err: unknown) => { 
+            console.error(err);
             let errorMessage = "An unexpected error occured";
 
             if (isAxiosError(err)) {
-                errorMessage = err.response?.data.detail || err.message;
+                errorMessage = (typeof err.response?.data.detail === "string" && err.response?.data.detail) || "An unexpected error occured";
             } else if (err instanceof Error) {
                 errorMessage = err.message;
             }

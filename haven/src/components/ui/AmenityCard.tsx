@@ -6,6 +6,7 @@ interface Props {
     handleClick: () => void;
 }
 const AmenityCard: React.FC<Props> = ({ text, isChecked, handleClick }) => {
+
     return (
         <div
             className="flex items-center gap-3 hover:bg-gray-50 rounded-lg py-4 px-2 cursor-pointer select-none"

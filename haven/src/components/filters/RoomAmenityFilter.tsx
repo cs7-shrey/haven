@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { getConstants } from '@/lib/utils';
 import { useSearchStore, type Amenity } from '@/store/useSearchStore';
-import RoomAmenityCard from '../RoomAmenityCard';
 import { type AmenityUI } from './HotelAmenityFilter';
 import { useTempFilterStore } from '@/store/useTempFilterStore';
+import AmenityCard from '../ui/AmenityCard';
 
 const RoomAmenityFilter = () => {
     const [amenityList, setAmenityList] = useState<AmenityUI[]>([]);
@@ -30,16 +30,27 @@ const RoomAmenityFilter = () => {
         getRoomAmenities();
 
     }, [tempRoomAmenities])
+    const returnOnClick = (isChecked: boolean, text: string, code: string) => {
+        const onClick = () => {
+            if (!isChecked) {
+                setTempRoomAmenities([...tempRoomAmenities, {name: text, code: code}]);
+            }
+            else {
+                setTempRoomAmenities(tempRoomAmenities.filter((amen) => amen.code !== code))
+            }
+        }
+        return onClick
+    }
     return (
         <>
             <div className="mt-6 mb-1 px-1 font-bold">Room Amenities</div>
             <div>
                 {amenityList.map((amenity) => (
-                    <RoomAmenityCard
+                    <AmenityCard
                         key={amenity.code}
                         text={amenity.name ?? ''}
-                        code={amenity.code}
                         isChecked={amenity.isChecked}
+                        handleClick={returnOnClick(amenity.isChecked, amenity.name ?? '', amenity.code)}
                     />
                 ))}
             </div>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getConstants } from '@/lib/utils'
 import { useSearchStore, type Amenity } from '@/store/useSearchStore';
-import HotelAmenityCard from '../HotelAmenityCard';
 import { useTempFilterStore } from '@/store/useTempFilterStore';
+import AmenityCard from '../ui/AmenityCard';
 
 export interface AmenityUI extends Amenity {
     isChecked: boolean;
@@ -26,20 +26,31 @@ const HotelAmenityFilter = () => {
             setAmenityList(hotelAmenitiesFromLocal.map((amen) => {
                 return {...amen, isChecked: tempHotelAmenities.some(obj => obj.code === amen.code)}
             }))
-            // setAmenityList(hotelAmenitiesFromServer);
         }
         getHotelAmenities();
     }, [tempHotelAmenities])
+    
+    const returnOnClick = (isChecked: boolean, text: string, code: string) => {
+        const onClick = () => {
+            if (!isChecked) {
+                setTempHotelAmenities([...tempHotelAmenities, {name: text, code: code}]);
+            }
+            else {
+                setTempHotelAmenities(tempHotelAmenities.filter((amen) => amen.code !== code))
+            }
+        }
+        return onClick;
+    }
     return (
         <>
             <div className="mt-6 mb-1 px-1 font-bold">Amenities</div>
             <div>
                 {amenityList.map((amenity) => (
-                    <HotelAmenityCard
+                    <AmenityCard
                         key={amenity.code}
                         text={amenity.name ?? ''}
-                        code={amenity.code}
                         isChecked={amenity.isChecked}
+                        handleClick={returnOnClick(amenity.isChecked, amenity.name ?? '', amenity.code)}
                     />
                 ))}
             </div>

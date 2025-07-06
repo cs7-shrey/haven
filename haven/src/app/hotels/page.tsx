@@ -7,7 +7,7 @@ import { useSocketStore } from '@/store/useSocketStore';
 import { HashLoader } from 'react-spinners';
 // import GoogleMaps from '@/components/maps/GoogleMaps';
 import TopBar from '@/components/TopBar';
-import Filters from '@/components/Filters';
+import Filters from '@/components/filters/Filters';
 import NotFoundCard from '@/components/ui/NotFoundCard';
 import HotelCard from '@/components/HotelCard';
 import { SlidersHorizontal } from 'lucide-react';
@@ -51,7 +51,7 @@ export default function Hotels() {
                     <div className="p-4 relative z-20">
                         <button
                             onClick={filtersClick}
-                            className="relative z-30 flex gap-2 px-4 items-center bg-secondary p-2 rounded-md text-primary"
+                            className="relative z-30 flex gap-2 px-4 items-center bg-secondary p-2 rounded-md text-primary-foreground"
                         >
                             <SlidersHorizontal size={18} strokeWidth={2} color="white" />
                             Filters

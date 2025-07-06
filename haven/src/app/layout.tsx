@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast'
+import AuthPopup from "@/components/auth/popup";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,13 +25,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const [showSignup, setShowSignup] = useState<boolean>(false);
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        {children}
-        <Toaster />
+        <AuthContextProvider>
+          {children}
+          <Toaster />
+          <AuthPopup />
+        </AuthContextProvider>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 import "./styles/logo.css"
 function LetterDiv({ letter }: { letter: string }) {
     return (
-        <div className="font-bold font-mono px-1 bg-primary text-background rounded-sm">{letter}</div>
+        <div className="font-bold font-mono px-1 bg-background text-primary rounded-[2]">{letter}</div>
     );
 }
 const Logo = () => {

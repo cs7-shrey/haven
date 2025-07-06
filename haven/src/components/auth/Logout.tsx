@@ -1,15 +1,25 @@
 import { User } from "lucide-react"
-import { logout } from "@/store/useAuthStore"
+import { Button } from "../ui/button";
+import { FaUserCircle } from "react-icons/fa";
 
-const Logout = () => {
+interface Props {
+    loggedIn: boolean;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+const Logout: React.FC<Props> = ({ loggedIn, onClick }) => {
+    // loggedIn = true;
     return (
-        <button
-            onClick={() => logout()}
-            className='flex gap-2 justify-center items-center font-bold hover:bg-gray-500 text-background py-2 px-4 rounded-lg'
+        <Button
+            onClick={onClick}
+            className=' border-white/20 backdrop-blur-sm text-background text-md font-bold hover:bg-white/20'
         >
-            <User />
-            Log out
-        </button>
+            {loggedIn ? <User/> : <FaUserCircle size={34} className=""
+                style={{
+                    scale: 1.3
+                }} 
+            />}
+            {loggedIn ? "Log out" : "Log in"}
+        </Button>
     )
 }
 

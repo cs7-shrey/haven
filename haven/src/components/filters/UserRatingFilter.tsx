@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import NumberBox from "../ui/NumberBox";
-import { useTempFilterStore } from "@/store/useTempFilterStore";
-import { useSearchStore } from "@/store/useSearchStore";
 
-const UserRatingFilter = () => {
+interface Props {
+    rating: number;
+    setRating: (rating: number) => void;
+}
+const UserRatingFilter: React.FC<Props> = ({rating, setRating}) => {
     const [isZeroSelected, setIsZeroSelected] = useState(true);
     const [isThreeSelected, setIsThreeSelected] = useState(false);
     const [isFourSelected, setIsFourSelected] = useState(false);
@@ -15,14 +17,10 @@ const UserRatingFilter = () => {
         setIsFourSelected(false);
         setIsFourPointFiveSelected(false);
     };
-    const { tempUserRating, setTempUserRating } = useTempFilterStore();
-    useEffect(() => {
-        const { userRating } = useSearchStore.getState();
-        setTempUserRating(userRating);
-    }, [setTempUserRating]);
+
     useEffect(() => {
         setAllFalse();
-        switch (tempUserRating) {
+        switch (rating) {
             case 0:
                 setIsZeroSelected(true);
                 break;
@@ -36,15 +34,27 @@ const UserRatingFilter = () => {
                 setIsFourPointFiveSelected(true);
                 break;
         }
-    }, [tempUserRating]);
+    }, [rating]);
+    const numberBoxData = [
+        {text: "0+", isSelected: isZeroSelected},
+        {text: "3+", isSelected: isThreeSelected},
+        {text: "4+", isSelected: isFourSelected},
+        {text: "4.5+", isSelected: isFourPointFiveSelected},
+    ]
     return (
         <>
             <div className="my-2 font-bold">User Rating</div>
             <div className="flex  justify-between gap-4">
-                <NumberBox text="0+" isSelected={isZeroSelected} />
-                <NumberBox text="3+" isSelected={isThreeSelected} />
-                <NumberBox text="4+" isSelected={isFourSelected} />
-                <NumberBox text="4.5+" isSelected={isFourPointFiveSelected} />
+                {numberBoxData.map((element, index) => {
+                    return (
+                    <NumberBox 
+                        key={index} 
+                        text={element.text} 
+                        isSelected={element.isSelected} 
+                        onClick={() => setRating(Number(element.text.split("+")[0]))}
+                    />
+                )
+                })}
             </div>
         </>
     )
