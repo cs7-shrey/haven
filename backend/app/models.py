@@ -1,7 +1,5 @@
-from sqlalchemy import create_engine, MetaData, Table, inspect, ForeignKey, func
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String, Float, Boolean, Date, TIMESTAMP, BigInteger, ARRAY, UniqueConstraint, JSON
-from typing import List, Optional
+from sqlalchemy import ForeignKey, func
+from sqlalchemy import Column, Integer, String, Float, Date, TIMESTAMP, BigInteger, ARRAY, JSON
 from .database import Base
 from geoalchemy2 import Geography
 

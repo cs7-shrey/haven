@@ -2,37 +2,32 @@ import datetime
 from enum import Enum
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
 
 # the decoded token data that is used to the current user
 class TokenData(BaseModel):
     user_id: int
     
-    
-class SearchSuggestion(BaseModel):
-    label: str
-    sublabel: str
-    type: str
-    score: float
-
-
-class HotelInfoResponse(BaseModel):
+class Hotel(BaseModel):
     id: str
     gi_id: int
     name: str
     location: str
     hotel_star: int
-    user_rating: float = 0
-    user_rating_count: int
+    user_rating: float = 0.0
+    user_rating_count: int = 0
     property_type: str
     images: list[str]
-    amenities: list[str]
-    
-class Beds(BaseModel):
-    type: str
-    count: int  
-    bedTypeKey: Optional[str] = None # TODO: CHANGE THIS LATER
 
+class HotelRoom(BaseModel):
+    room_type_id: int
+    room_type_name: str
+    room_photos: list[str]
+    max_guests: int
+    max_adults: int
+    max_children: int
+    display_amenities: list[str]
+    beds: Optional[list['Beds']] = []  # Forward reference for Beds model
+    
 class RatePlan(BaseModel):
     plan_id: int
     pay_mode: str
@@ -40,17 +35,11 @@ class RatePlan(BaseModel):
     total_discount: float
     taxes: float
     filter_code: list[str]
-
-class HotelRoomResponse(BaseModel):
-    room_type_id: int
-    room_type_name: str
-    room_photos: list[str]
-    max_guests: int
-    max_adults: int
-    max_children: int
-    beds: Optional[list[Beds]] = []
-    display_amenities: list[str]
-    rate_plans: list[RatePlan]
+    
+class Beds(BaseModel):
+    type: str
+    count: int  
+    bedTypeKey: Optional[str] = None # TODO: CHANGE THIS LATER
 
 class Place(BaseModel):
     name: str
@@ -84,6 +73,8 @@ class SearchFilters(DateFilters, BudgetFilters, RatingFilters, AmenityFilters):
 class SearchHotelsRequest(SearchFilters):
     near: Optional[str] = ''
 
+# For display in the search results
+# TODO: Combine this with the `Hotel` model
 class HotelDetails(BaseModel):
     id: str
     name: str
@@ -96,10 +87,6 @@ class HotelDetails(BaseModel):
     latitude: float 
     longitude: float
 
-class HotelSearchResponse(BaseModel):
-    hotels: list[HotelDetails]
-    proximity_coordinate: Optional[ProximityCoordinate] = None
-    near: Optional[str] = ''
 
 class Status(BaseModel):
     code: int
@@ -117,16 +104,6 @@ class ChatMode(str, Enum):
 class Service(str, Enum):
     CHAT = "chat"
     SEARCH = "search"
-
-    
-    
-class BookingDetails(BaseModel):
-    booking_id: int
-    check_in: date
-    check_out: date
-    hotel: dict
-    room_type: dict
-    rate_plan: dict
 
 class HealthCheckResponse(BaseModel):
     name: str

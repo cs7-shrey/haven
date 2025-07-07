@@ -1,11 +1,13 @@
 from ...utils.search_suggestions import get_suggestions, suggestion_search_space
 from app.database import get_db
 from sqlalchemy.orm import Session
-from app.schemas import ProximityCoordinate, SearchFilters, SearchHotelsRequest, HotelSearchResponse, SearchSuggestion
+from app.schemas import ProximityCoordinate, SearchFilters, SearchHotelsRequest
 from app.services.crud.hotel.filter import get_hotels_with_filters
 from app.services.maps.autocomplete import place_autocomplete
 from app.services.maps.geocoding import geocode_place_id
 from fastapi import APIRouter, Depends, HTTPException
+
+from .schemas import SearchSuggestion, HotelSearchResponse
 
 router = APIRouter(prefix="/search", tags=["search"])
 

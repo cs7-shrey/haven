@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, WebSocket, Query, WebSocketDisconnect, WebSocketException
 from app.database import get_db
-from app.schemas import HotelRoomResponse, HotelInfoResponse, ChatMode, TokenData
+from app.schemas import ChatMode, TokenData
 from sqlalchemy.orm import Session
 from app.oauth2 import get_current_client, socket_get_current_client
 from app.services.crud.hotel.info import get_hotel_info_by_id, get_hotel_room_info
 from app.services.hotel_info_agent import HotelChatAgent
 from app.services.queues import queue_maps
 import asyncio
+
+from .schemas import HotelInfoResponse, HotelRoomResponse
+
 router = APIRouter(prefix="/hotel", tags=["hotel"])
 
 @router.get("/{id}", response_model=HotelInfoResponse)
