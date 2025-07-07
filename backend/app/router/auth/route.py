@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
-from app import schemas
+from . import schemas
+from app.schemas import TokenData
 from app.services.crud.user import get_user_by_email, create_user, get_user_by_id
 from app.services import hashing
-from app.services.crud.booking import get_bookings_by_user_id, get_booking_info_by_id
 from app.oauth2 import get_current_client
 from app.database import get_db
 from sqlalchemy.orm import Session
 import os
 from dotenv import load_dotenv
-from ..oauth2 import create_access_token
+from ...oauth2 import create_access_token
 
 
 load_dotenv()
@@ -61,29 +61,10 @@ async def logout(request: Request, response: Response):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No active session found")
 
 @router.get('/checkauth')
-async def check_auth(db: Session = Depends(get_db), current_user: schemas.TokenData = Depends(get_current_client)):
+async def check_auth(db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
     try: 
         user = get_user_by_id(db, current_user.user_id)
         return {"email": user.email}
     except Exception as e:
         print(e)
         
-
-@router.get('/bookings')
-async def get_bookings(current_user: schemas.TokenData = Depends(get_current_client), db: Session = Depends(get_db)):
-    try:
-        bookings = get_bookings_by_user_id(db, current_user.user_id)
-        return bookings
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Could not fetch bookings")
-    
-@router.get('/booking/{id}')
-async def get_booking_by_id(id: int, current_user: schemas.TokenData = Depends(get_current_client), db: Session = Depends(get_db)):
-    try:
-        booking = get_booking_info_by_id(db, id, current_user.user_id)
-        if not booking:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Booking not found")
-        return booking
-    except Exception as e:
-        print(e)

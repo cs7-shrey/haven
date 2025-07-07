@@ -16,7 +16,7 @@ load_dotenv()
 
 API_KEY = os.getenv('SPEECHMATICS_API_KEY')
 PATH_TO_FILE = "received_audio.wav"
-CONNECTION_URL = f"wss://eu2.rt.speechmatics.com/v2"
+CONNECTION_URL = "wss://eu2.rt.speechmatics.com/v2"
 
 router = APIRouter(tags=["voice websocket"])
 
@@ -53,7 +53,7 @@ async def audio_websocket(ws: WebSocket, language: str, service: str = Query(...
         t2 = time.time()
         print(f'transcription took {t2-t1} seconds')
         # shift this to redis
-        if not current_user.user_id in queue_maps[service]:
+        if current_user.user_id not in queue_maps[service]:
             return
         await queue_maps[service][current_user.user_id].put(ws_speech.transcript + '.')
         print('data inserted in queue')

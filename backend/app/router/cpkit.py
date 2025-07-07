@@ -1,12 +1,7 @@
-import asyncio
-from fastapi import FastAPI
 from copilotkit import CopilotKitRemoteEndpoint, Action as CopilotAction
 from app.services.tools.get_distance import get_distance
 from app.services.cpkit_actions import nearby_places, events
-import time
 from dotenv import load_dotenv
-import os
-import httpx
  
 load_dotenv()
 

@@ -70,3 +70,5 @@ def custom_sort(choices, query):
 
 def get_suggestions(search_term: str, suggestion_search_space: list) -> list:
     return custom_sort(suggestion_search_space, search_term)
+
+suggestion_search_space = get_suggestion_space()

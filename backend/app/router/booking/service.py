@@ -1,5 +1,5 @@
 from app.models import Booking, Hotel, RoomType, RatePlan
-from app.schemas import BookHotelSchema
+from .schemas import BookHotelSchema
 from sqlalchemy import select, and_, func
 from sqlalchemy.orm import Session
 
@@ -88,3 +88,38 @@ def get_booking_info_by_id(db: Session, booking_id: int, user_id: int):
     )
     result = db.execute(query).mappings().one()
     return result
+
+def check_booking_detail_validity(db: Session, hotel_id: int, room_type_id: int, rate_plan_id: int):
+    query1 = (
+        select (
+            RatePlan.plan_id,
+            RatePlan.room_type_id,
+        )
+        .where(
+            and_(
+                RatePlan.room_type_id == room_type_id,
+                RatePlan.plan_id == rate_plan_id
+            )
+        )
+    )
+    query2 = (
+        select (
+            RoomType.room_type_id,
+            RoomType.hotel_id
+        )
+        .where(
+            and_(
+                RoomType.room_type_id == room_type_id,
+                RoomType.hotel_id == hotel_id
+            )
+        )
+    )
+    try:
+        result1 = db.execute(query1).mappings().one()
+        result2 = db.execute(query2).mappings().one()
+        if result1 and result2:
+            return True
+        else:
+            return False
+    except Exception:
+        return False

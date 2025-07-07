@@ -1,5 +1,5 @@
 from app.database import get_db
-from app.routes.search import suggestion_search_space
+from app.utils.search_suggestions import suggestion_search_space
 from app.services.crud.hotel.filter import get_hotels_with_filters
 from app.services.maps.main import geocode_to_most_relevant
 from app.utils.search_suggestions import get_suggestions
@@ -14,6 +14,7 @@ def set_error(llm_filters):
     llm_filters['filters'] = {}
     llm_filters['data'] = []
     return llm_filters
+
 def preprocess_llm_filters(llm_filters, VoiceSearchSchema: Type[BaseModel]):
     """
         Making sure that the filters have a valid schema

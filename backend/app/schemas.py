@@ -8,14 +8,6 @@ from datetime import date
 class TokenData(BaseModel):
     user_id: int
     
-class UserLogin(BaseModel):
-    email: str
-    password: str
-
-class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
     
 class SearchSuggestion(BaseModel):
     label: str
@@ -126,16 +118,7 @@ class Service(str, Enum):
     CHAT = "chat"
     SEARCH = "search"
 
-class Constants(BaseModel):
-    name: str
-    code: Optional[str] = ''
     
-class BookHotelSchema(BaseModel):
-    check_in: date
-    check_out: date
-    hotel_id: str
-    room_type_id: int
-    rate_plan_id: int
     
 class BookingDetails(BaseModel):
     booking_id: int

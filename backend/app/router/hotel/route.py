@@ -1,11 +1,9 @@
-from fastapi import APIRouter, Depends, WebSocket, Query, WebSocketDisconnect, WebSocketException, HTTPException
+from fastapi import APIRouter, Depends, WebSocket, Query, WebSocketDisconnect, WebSocketException
 from app.database import get_db
-from app.schemas import HotelRoomResponse, HotelInfoResponse, ChatMode, BookHotelSchema, TokenData
+from app.schemas import HotelRoomResponse, HotelInfoResponse, ChatMode, TokenData
 from sqlalchemy.orm import Session
 from app.oauth2 import get_current_client, socket_get_current_client
 from app.services.crud.hotel.info import get_hotel_info_by_id, get_hotel_room_info
-from app.services.crud.room import check_booking_detail_validity
-from app.services.crud.booking import book_hotel
 from app.services.hotel_info_agent import HotelChatAgent
 from app.services.queues import queue_maps
 import asyncio
@@ -25,17 +23,6 @@ async def get_hotel_rooms(id: int, db: Session = Depends(get_db), current_user: 
     except Exception as e:
         print(e)
         
-@router.post('/book')
-async def book_hotel_route(booking_details: BookHotelSchema, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
-    # checking details
-    res = check_booking_detail_validity(db, int(booking_details.hotel_id), booking_details.room_type_id, booking_details.rate_plan_id)
-    if not res:
-        raise HTTPException(status_code=400, detail="Invalid booking details")
-    # book the hotel 
-    booking = book_hotel(db, current_user.user_id, booking_details)
-    if not booking:
-        raise HTTPException(status_code=400, detail="Booking failed")
-    return {"message": "Booking successful", "booking_id": booking.booking_id}
 
 @router.websocket("/exp/{id}/ws/chat")  
 async def hotel_chat_ws(

@@ -1,8 +1,9 @@
-from fastapi import FastAPI, APIRouter, Depends
+from fastapi import APIRouter, Depends
 from app.database import get_db
 from sqlalchemy.orm import Session
 from app import models
-from app import schemas
+
+from . import schemas
 
 router = APIRouter(prefix="/constants", tags=["constants"])
 
