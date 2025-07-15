@@ -1,7 +1,7 @@
 import { formatDate, formatRoomOffer } from "@/lib/utils";
 import { useHotelDescStore, type RatePlan } from "@/store/useHotelDescStore";
 import { useSearchStore } from "@/store/useSearchStore";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 // type Props = RatePlan
 
 interface Props extends RatePlan {
@@ -11,9 +11,9 @@ interface Props extends RatePlan {
 const RoomOffer: React.FC<Props> = (ratePlan) => {
     const { hotelData } = useHotelDescStore();
     const { checkIn, checkOut } = useSearchStore();
-    const navigate = useNavigate();
+    const router = useRouter();
     const handleClick = () => {
-        navigate(`/hotel/booking?checkIn=${formatDate(checkIn)}&checkOut=${formatDate(checkOut)}&hotelId=${hotelData?.id}&roomTypeId=${ratePlan.roomTypeId}&planId=${ratePlan.plan_id}`)
+        router.push(`/hotel/booking?checkIn=${formatDate(checkIn)}&checkOut=${formatDate(checkOut)}&hotelId=${hotelData?.id}&roomTypeId=${ratePlan.roomTypeId}&planId=${ratePlan.plan_id}`)
     }
 
     return (
@@ -39,10 +39,10 @@ const RoomOffer: React.FC<Props> = (ratePlan) => {
   
             {/* Right Section */}
             <div className="flex flex-col justify-start flex-1 h-full border-l-2 px-3">
-                <h2 className="mt-[5%] text-[1.24rem] md:text-2xl font-bold text-secondary">
+                <h2 className="mt-[5%] text-[1.24rem] md:text-2xl font-bold text-foreground">
                     <span className="font-light">₹</span>{ratePlan.base_fare}
                 </h2>
-                <p className="mx-1 text-xs md:text-[0.8rem] text-secondary/60">
+                <p className="mx-1 text-xs md:text-[0.8rem] text-foreground/60">
             +₹{ratePlan.taxes} taxes & fees<br/>
                     <span className="font-bold">1 Room</span> per night
                 </p>

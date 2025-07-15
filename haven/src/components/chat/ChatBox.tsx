@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import InputMessage from './InputMessage'
 import Message from './Message'
-import { X } from 'lucide-react'
+import { Circle, X } from 'lucide-react'
 import { useHotelPageChatStore } from '@/store/useHotelPageChatStore'
-import typing from '@/assets/typing.svg'
-import { Circle } from 'lucide-react'
-
 interface Props {
     onClose: () => void
 }
@@ -57,7 +54,7 @@ const ChatBox: React.FC<Props> = ({ onClose }) => {
                     <Message key={index} text={msg.text} sender={msg.sender} />
                 ))}
                 <div ref={endRef} className='pl-2'>
-                    {waitingForMessage && <img src={typing} className='h-10 w-14'/>}
+                    {waitingForMessage && <img src={"/assets/typing.svg"} className='h-10 w-14'/>}
                 </div>
             </div>
             <InputMessage />

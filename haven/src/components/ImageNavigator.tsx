@@ -1,3 +1,4 @@
+"use client"
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
@@ -23,6 +24,7 @@ const ImageNavigator = ({ images, onClose }: ImageNavigatorProps) => {
       src={img}
       alt={`Image ${index + 1}`}
       className="w-full h-full max-h-64 min-h-full object-cover"
+      key={index}
     />
   ))
 

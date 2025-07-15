@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Star } from 'lucide-react';
-import { useHotelStore, type Hotel } from '@/store/useHotelStore';
+import { type Hotel } from '@/types';
+import { useHotelStore } from '@/store/useHotelStore';
 
 const placeholderImg = "/placeholderImg.jpg"
 const HotelCard: React.FC<Hotel> = ({
@@ -59,7 +60,7 @@ const HotelCard: React.FC<Hotel> = ({
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Left side - Main Image and Thumbnail Gallery */}
-            <a to={`/hotel/${id}`} className='w-full h-full flex overflow-hidden rounded-l-lg' target='_blank'>
+            <a href={`/hotel/${id}`} className='w-full h-full flex overflow-hidden rounded-l-lg' target='_blank'>
                 <div className="w-32 md:size-52 lg:size-52 relative flex flex-col rounded-l-lg">
                     {/* Main Image */}
                     <div className="h-48">

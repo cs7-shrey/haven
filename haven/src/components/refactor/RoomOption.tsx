@@ -5,7 +5,6 @@ import RoomOffer from "./RoomOffer";
 import { type RoomType } from "@/store/useHotelDescStore";
 import RoomMoreInfo from "./RoomMoreInfo";
 import { useState, useEffect } from "react";
-import placeholderImg from "/placeholderImg.jpg"
 
 type Props = RoomType
 
@@ -22,8 +21,10 @@ const RoomOption: React.FC<Props> = (roomType: RoomType) => {
             document.body.style.overflow = 'unset';
         };
     }, [roomMoreInfo]);
+    const placeholderImg = "/assets/placeholderImg.jpg";
+
     return (
-        <div className="flex flex-col sm:flex-row w-11/12 mt-8 rounded-lg bg-primary/80" id="room-options">
+        <div className="flex flex-col sm:flex-row w-11/12 mt-8 rounded-lg bg-background/80" id="room-options">
             {/* Left Section - Image and Specifications */}
             <div className="flex flex-col sticky top-0 p-4 sm:max-w-[50%]  border border-r-2">
                 <div className="ml-2 mt-2">
@@ -36,12 +37,12 @@ const RoomOption: React.FC<Props> = (roomType: RoomType) => {
                             alt="room option photo" 
                             className="w-11/12 min-h-10 mx-auto mt-4 rounded-lg"
                         />
-                        <div className="absolute bottom-1 left-4 py-2 px-2 text-left m-1 mr-auto w-fit h-fit max-w-[30%] max-h-[20%] text-xs md:text-sm bg-black/80 text-primary rounded-md">
+                        <div className="absolute bottom-1 left-4 py-2 px-2 text-left m-1 mr-auto w-fit h-fit max-w-[30%] max-h-[20%] text-xs md:text-sm bg-black/80 text-background rounded-md">
           +{roomType.room_photos.length - 1}
                         </div>
                     </button>
                 </div>
-                <p className="w-11/12 mx-auto mt-4 px-4 py-2 rounded-lg text-center font-bold text-xs text-accent shadow-md">
+                <p className="w-11/12 mx-auto mt-4 px-4 py-2 rounded-lg text-center font-bold text-xs text-foreground shadow-md">
           24/7 Room Service Available
                 </p>
                 <div className="flex flex-wrap gap-4 mx-4 my-4">
@@ -58,7 +59,7 @@ const RoomOption: React.FC<Props> = (roomType: RoomType) => {
             </div>
 
             {/* Right Section - Room Offers */}
-            <div className="flex flex-col border border-primary rounded-r-lg border-l-0 h-[505px] pl-2 pt-2 overflow-y-auto scrollbar-webkit flex-2 max-w-full sm:w-[55%] md:w-[55%] self-center">
+            <div className="flex flex-col rounded-r-lg border-l-0 h-[505px] pl-2 pt-2 overflow-y-auto scrollbar-webkit flex-2 max-w-full sm:w-[55%] md:w-[55%] self-center">
                 {
                     roomType.rate_plans.map((rp, index) => (
                         <RoomOffer key={index} sNo={index+1} {...rp} roomTypeId={roomType.room_type_id} />

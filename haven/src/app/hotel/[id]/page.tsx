@@ -1,12 +1,13 @@
+"use client"
 import ImageBox from "@/components/refactor/ImageBox";
-import Navbar from "@/pages/HotelDescription/components/Navbar"
+import Navbar from "@/components/Navbar"
 import RoomOption from "@/components/refactor/RoomOption";
 import { useState, useEffect } from "react";
 import { useHotelDescStore } from "@/store/useHotelDescStore";
 import HotelNavbar from "@/components/refactor/HotelNavbar";
 import { Bot } from "lucide-react";
 import ChatBox from "@/components/chat/ChatBox";
-import { useNavigate, useParams } from "react-router";
+import { useParams, useRouter } from "next/navigation";
 
 const HotelDescription = () => {
     const { hotelData, roomData } = useHotelDescStore();
@@ -14,11 +15,11 @@ const HotelDescription = () => {
     const onClick = () => {
         setChatBoxOpen((prev) => !prev);
     }
-    let { id } = useParams()
-    const navigate = useNavigate()
+    const router = useRouter();
+    const params = useParams();
+    const id = params.id as string;
     if (!id) {
-        id = "124123412341234123"
-        navigate('/')
+        router.push('/')
     }
     useEffect(() => {
         return () => {
@@ -52,11 +53,6 @@ const HotelDescription = () => {
             <div className="flex flex-col justify-center items-center md:grid md:grid-cols-10 overflow-y-auto top-0 bg-[#d6d6d696]">
                 <div className="col-span-8 col-start-2 mx-auto">
                     <div className="room-wrapper flex flex-col items-center">
-                        {/* <div className="wrapper-header">
-                            <div style={{ flex: "1.3", display: "flex", alignItems: "center", justifyContent: "center", height: "50px" }}>Room Details</div>
-                            <div style={{ flex: "1", display: "flex", alignItems: "center", justifyContent: "center", height: "50px" }}>Room Options</div>
-                            <div style={{ flex: "1", display: "flex", alignItems: "center", justifyContent: "center", height: "50px" }}>Price</div>
-                        </div> */}
                         {roomData?.map((_, i) => (
                             <RoomOption 
                                 key={i}

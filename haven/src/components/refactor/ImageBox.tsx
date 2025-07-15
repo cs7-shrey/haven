@@ -1,4 +1,4 @@
-import placeholderImg from "/placeholderImg.jpg"
+// import placeholderImg from "/placeholderImg.jpg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed, faMap, faUser, faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
     const handleClick = () => {
         setShowPopup((prev) => !prev);
     }
+    const placeholderImg = "/assets/placeholderImg.jpg"
     useEffect(() => {
         if (showPopup) {
             document.body.style.overflow = "hidden";
@@ -68,7 +69,7 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
                         {/* <div className="text-4xl font-[900]">
                 {userRating}<span className="text-medium font-normal text-secondary/60">/5</span>
             </div> */}
-                        <div className="p-2 text-primary bg-primary rounded-md">
+                        <div className="p-2 text-background bg-primary rounded-md">
                             {userRating}
                         </div>
                     </div>
@@ -77,11 +78,11 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
                     <div className="flex flex-col md:flex-row gap-2">
                         <div className="relative md:flex-1 min-w-[70%]" onClick={handleClick}>
                             <img
-                                src={images?.[0] ? "https:" + images?.[0] : placeholderImg}
+                                src={images?.[0] ? "https:" + images?.[0] : "/assets/placeholderImg.jpg"}
                                 alt="Main"
                                 className="w-full rounded-md shadow h-full min-h-[480x]"
                             />
-                            <div className="absolute bottom-0 left-0 w-full flex justify-between bg-black/70 text-primary font-bold rounded-sm text-sm p-1">
+                            <div className="absolute bottom-0 left-0 w-full flex justify-between bg-black/70 text-background font-bold rounded-sm text-sm p-1">
                                 <div>Property Photos</div>
                                 <div>View all</div>
                             </div>
@@ -124,7 +125,7 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
                         </div>
                         <a href="#room-options">
                             <button
-                                className="bg-primary text-primary hover:bg-primary/90 font-bold py-2 px-4 w-full rounded-md text-[0.8rem] md:text-sm lg:text-[0.9rem]" 
+                                className="bg-primary text-background hover:bg-primary/90 font-bold py-2 px-4 w-full rounded-md text-[0.8rem] md:text-sm lg:text-[0.9rem]" 
                             >
                 VIEW {nRoomOptions} ROOM OPTIONS
 
