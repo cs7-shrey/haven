@@ -12,7 +12,7 @@ import NotFoundCard from '@/components/ui/NotFoundCard';
 import HotelCard from '@/components/HotelCard';
 import { SlidersHorizontal } from 'lucide-react';
 
-import useHotelSearch from '@/hooks/useHotelSearch';
+import useHotelSearch from '@/hooks/hotels/useHotelSearch';
 import toast from 'react-hot-toast';
 
 

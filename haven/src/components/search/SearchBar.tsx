@@ -1,24 +1,25 @@
-// import { useNavigate } from 'react-router';
 import SearchDropdown from '../SearchDropdown';
-// import { useSearchStore } from '@/store/useSearchStore';
-// import { formatDate } from '@/lib/utils';
-// import { ArrowRight } from 'lucide-react';
 import SearchButton from './ui/SearchButton';
 import { Check } from './ui/CheckInOut';
-import Voice from '@/components/Voice';
+import Voice from '@/components/voice-search/Voice';
 import LanguageButton from './ui/LanguageButton';
 import { useSocketStore } from '@/store/useSocketStore';
 import { useSearchStore } from '@/store/useSearchStore';
 import { useHotelStore } from '@/store/useHotelStore';
+import { useVoiceSearch } from '@/hooks/useVoiceSearch';
 import { useRouter } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
-
-
+import { useLLMFilters } from '@/hooks/useLlmFilters';
 
 const SearchBar = () => {
   const {lang, setLang} = useSocketStore()
   const { setInfoMessage } = useHotelStore();
   const { queryTerm,  checkIn, setCheckIn, checkOut, setCheckOut } = useSearchStore();
+
+  const filtersProcessing = useLLMFilters();
+  const {isStreaming, toggleStreaming, sourceNodeRef} = useVoiceSearch({
+    onFiltersReceived: filtersProcessing
+  })
 
   const router = useRouter()
   
@@ -35,7 +36,7 @@ const SearchBar = () => {
         {/* voice controls */}
         <div className='flex self-center md:self-start border-l-2 rounded-md md:rounded-none md:border-0'>
           <div className='min-h-full border-r-2'>
-            <Voice />
+            <Voice isStreaming={isStreaming} toggleStreaming={toggleStreaming} sourceNodeRef={sourceNodeRef}/>
           </div>
           <div className='border-r-2 flex justify-center items-center'>
             <LanguageButton lang={lang} setLang={setLang}/>

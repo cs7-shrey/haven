@@ -1,34 +1,12 @@
 import { useHotelStore } from "@/store/useHotelStore";
-import { useRouter } from "next/router";
-import { type Hotel } from "@/store/useHotelStore";
-import { type ProximityCoordinate, useSearchStore } from "@/store/useSearchStore";
+import { useRouter } from "next/navigation";
+import type { Hotel, BackendFilters, Status } from "@/types";
+import { useSearchStore } from "@/store/useSearchStore";
 import toast from "react-hot-toast";
 
-interface Place {
-    name: string;
-    type: string;
-} 
-
-interface BackendFilters {
-    place: Place;
-    check_in: string;
-    check_out: string;
-    min_budget: number;
-    max_budget: number;
-    user_rating: number;
-    hotel_star: number;
-    property_type: string[];
-    hotel_amenity_codes: string[];
-    room_amenity_codes: string[];
-    proximity_coordinate: ProximityCoordinate | null;
-}
-interface Status {
-    code: number    
-    message: string 
-}
 
 export function useLLMFilters() {
-    // const router = useRouter()
+    const router = useRouter();
     const { setHotels, setFromVoice, setInfoMessage } = useHotelStore()
     const { setSearchValue } = useSearchStore();
     const processLlmFilters = (filters: BackendFilters, status: Status, hotelData: Hotel[]) => {

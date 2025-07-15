@@ -19,21 +19,27 @@ export class AudioService {
         this.mediaStream = await navigator.mediaDevices.getUserMedia({
             audio: config
         });
-        // audio context -> controlls the audio thread
+
+        // audio context -> controls the audio thread
         this.audioContext = new AudioContext();
-        // source node -> works in the audio thread to receive audio from media stream -> does some internal magic to send audio to worklet script/node
+
+        /*  source node -> works in the audio thread to receive audio from media stream 
+        -> does some internal magic to send audio to worklet script/node */
         this.sourceNode = this.audioContext.createMediaStreamSource(this.mediaStream)
         
-        // this addModule loads a script in a separate worklet thread which registers a processor (see /audio-processors)
+        /* this addModule loads a script in a separate worklet thread which 
+        registers a processor (see /audio-processors) */
         await this.audioContext.audioWorklet.addModule(
             "/audio-processors/linear-pcm-processor.js"
         )
+
         this.workletNode = new AudioWorkletNode(
             this.audioContext,
             "linear-pcm-processor"
         )
         this.sourceNode.connect(this.workletNode)
     }
+
     onAudioData(callback: (buffer: Int16Array) => void) {
         if (this.workletNode) {
             this.workletNode.port.onmessage = (event) => {
@@ -41,9 +47,11 @@ export class AudioService {
             }
         }
     }
+
     getSourceNode() {
         return this.sourceNode;
     }
+
     cleanup() {
         if (this.mediaStream) {
             this.mediaStream.getTracks().forEach((track) => track.stop());

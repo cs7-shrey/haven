@@ -27,6 +27,20 @@ export interface SearchHotelParams {
     roomAmenities?: Amenity[];
     proximityCoordinate?: ProximityCoordinate;
 }
+// todo: combine with the search hotel params above
+export interface BackendFilters {
+    place: Place;
+    check_in: string;
+    check_out: string;
+    min_budget: number;
+    max_budget: number;
+    user_rating: number;
+    hotel_star: number;
+    property_type: string[];
+    hotel_amenity_codes: string[];
+    room_amenity_codes: string[];
+    proximity_coordinate: ProximityCoordinate | null;
+}
 export interface Place {
     name: string;
     type: string;
@@ -38,4 +52,8 @@ export interface ProximityCoordinate {
 export interface Amenity {
     name?: string;
     code: string;
+}
+export interface Status {
+    code: number    
+    message: string 
 }

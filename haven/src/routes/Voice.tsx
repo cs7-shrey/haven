@@ -6,7 +6,7 @@ import AudioMotionAnalyzer from 'audiomotion-analyzer';
 import { AudioService } from "@/lib/audioService";
 import { useSocketStore } from "@/store/useSocketStore";
 import { Mic } from "lucide-react";
-import { useLLMFilters } from "@/lib/voiceSearch";
+import { useLLMFilters } from "@/hooks/useLlmFilters";
 import { generateCurrentFiltersAsString } from "@/lib/utils";
 import { useHotelStore } from "@/store/useHotelStore";
 

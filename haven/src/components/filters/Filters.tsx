@@ -6,7 +6,7 @@ import HotelStarFilter from "./HotelStarFilter";
 import UserRatingFilter from "./UserRatingFilter";
 import RoomAmenityFilter from "./RoomAmenityFilter";
 import HotelPriceFilter from "./HotelPriceFilter";
-import { useHotelFilters } from "@/hooks/useHotelFIlters";
+import { useHotelFilters } from "@/hooks/hotels/useHotelFIlters";
 // import { useSearchParams } from "react-router";
 
 interface Props {
