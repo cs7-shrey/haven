@@ -11,18 +11,16 @@ from speechmatics.exceptions import (
     ForceEndSession,
     TranscriptionError,
 )
-from speechmatics.helpers import get_version, json_utf8, read_in_chunks
+from speechmatics.helpers import get_version, read_in_chunks
 from speechmatics.models import (
     AudioSettings,
     ClientMessageType,
     ConnectionSettings,
     ServerMessageType,
     TranscriptionConfig,
-    UsageMode,
 )
 from typing import Dict
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
-import websocket
 import websockets
 import wave
 import websockets.asyncio
@@ -30,6 +28,7 @@ import websockets.asyncio.client
 
 LOGGER = logging.getLogger(__name__)
 class Speech(WebsocketClient):
+    """Extended WebsocketClient for real-time transcription using Speechmatics."""
     def __init__(self, connection_url: str, api_key: str, language_code: str, audio_encoding: str, max_delay: int):
         super().__init__(ConnectionSettings(url=connection_url, auth_token=api_key))
         self.consumer_task = None
@@ -44,7 +43,7 @@ class Speech(WebsocketClient):
         ...
     async def start(self, from_cli: bool = False, extra_headers: Dict = None):
         audio_settings = self.audio_settings
-        transcription_config = self.transcription_config
+        # transcription_config = self.transcription_config
         if not self.websocket: 
             self.seq_no = 0
             self._language_pack_info = None

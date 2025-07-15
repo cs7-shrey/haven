@@ -18,6 +18,11 @@ class Hotel(BaseModel):
     property_type: str
     images: list[str]
 
+class Beds(BaseModel):
+    type: str
+    count: int  
+    bedTypeKey: Optional[str] = None # TODO: CHANGE THIS LATER
+
 class HotelRoom(BaseModel):
     room_type_id: int
     room_type_name: str
@@ -26,7 +31,7 @@ class HotelRoom(BaseModel):
     max_adults: int
     max_children: int
     display_amenities: list[str]
-    beds: Optional[list['Beds']] = []  # Forward reference for Beds model
+    beds: Optional[list[Beds]] = []  # Forward reference for Beds model
     
 class RatePlan(BaseModel):
     plan_id: int
@@ -36,10 +41,6 @@ class RatePlan(BaseModel):
     taxes: float
     filter_code: list[str]
     
-class Beds(BaseModel):
-    type: str
-    count: int  
-    bedTypeKey: Optional[str] = None # TODO: CHANGE THIS LATER
 
 class Place(BaseModel):
     name: str

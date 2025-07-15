@@ -1,5 +1,5 @@
 from fastapi import WebSocket, APIRouter, Depends, Query
-from app.services.speech import Speech
+from app.services.transcription.speech import Speech
 from app.schemas import TokenData
 from app.oauth2 import socket_get_current_client
 import asyncio
@@ -21,7 +21,12 @@ CONNECTION_URL = "wss://eu2.rt.speechmatics.com/v2"
 router = APIRouter(tags=["voice websocket"])
 
 @router.websocket("/ws/audio/{language}")
-async def audio_websocket(ws: WebSocket, language: str, service: str = Query(...), current_user: TokenData = Depends(socket_get_current_client)):
+async def audio_websocket(
+    ws: WebSocket, 
+    language: str, 
+    service: str = Query(...), 
+    current_user: TokenData = Depends(socket_get_current_client)
+):
     await ws.accept()
     audio_data = b""
     

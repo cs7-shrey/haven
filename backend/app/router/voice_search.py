@@ -1,3 +1,5 @@
+from fastapi.encoders import jsonable_encoder
+
 from app.services.ai import llm
 import asyncio
 from app.oauth2 import socket_get_current_client
@@ -17,7 +19,6 @@ router = APIRouter(tags=["voice search"])
 
 API_KEY = os.getenv('SPEECHMATICS_API_KEY')
 PATH_TO_FILE = "received_audio.wav"
-CONNECTION_URL = f"wss://eu2.rt.speechmatics.com/v2"
 
         
 @router.websocket("/ws/llm/search")
@@ -39,5 +40,6 @@ async def llm_response_websocket(ws: WebSocket, current_user: TokenData = Depend
     response = await process_llm_filters(filters_dict, SearchHotelsRequest, SearchFilters, db)      # BUG : here the VoiceSearchSchema should expect place as a string but instead the SearchHotelsRequestSchema has place as a 'Place' type
     hotels = response['data']
     response['data'] = [dict(hotel) for hotel in hotels]
-    await ws.send_json(response)
+
+    await ws.send_json(jsonable_encoder(response))
     await ws.close()

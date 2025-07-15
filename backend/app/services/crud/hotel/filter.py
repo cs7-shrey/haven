@@ -13,7 +13,7 @@ def get_hotels_with_filters(filters: SearchFilters, session: Session):
     }
     # First CTE (temp_var)
     # filtering based on star, rating and location
-    if not filters.place.type in mapping:
+    if filters.place.type not in mapping:
         return []
     if not filters.property_type:
         # TODO: get this from db

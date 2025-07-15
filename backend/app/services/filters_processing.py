@@ -4,6 +4,8 @@ from app.services.crud.hotel.filter import get_hotels_with_filters
 from app.services.maps.main import geocode_to_most_relevant
 from app.utils.search_suggestions import get_suggestions
 from app.schemas import SearchHotelsRequest, SearchFilters, ProximityCoordinate
+
+from datetime import datetime
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import Type
@@ -85,13 +87,19 @@ async def process_llm_filters(llm_filters, VoiceSearchSchema: Type[SearchHotelsR
             proximity_location = query_dict['near']
             coordinate = await geocode_to_most_relevant(proximity_location)
             proximity_coordinate = ProximityCoordinate(latitude=coordinate['latitude'], longitude=coordinate['longitude'])
+        
+        # convert to datetime object
+        if 'check_in' in query_dict:
+            query_dict['check_in'] = datetime.strptime(query_dict['check_in'], '%Y-%m-%d')
+        if 'check_out' in query_dict:
+            query_dict['check_out'] = datetime.strptime(query_dict['check_out'], '%Y-%m-%d')
             
         search_filters =  SearchFiltersSchema(**query_dict, proximity_coordinate=proximity_coordinate)
         final_response['filters'] = search_filters.model_dump()     # making sure that default filters exist
         # query the database
         try:
             final_response['data'] = get_hotels_with_filters(search_filters, db)
-        except:
+        except Exception:
             final_response['status'] = {
                 'code': 400,
                 'message': "Some error occured. Please try again or use manual search"
