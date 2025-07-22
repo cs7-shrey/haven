@@ -1,4 +1,4 @@
-from .tools.get_hotel_info import GetHotelInfo, get_hotel_info
+from .tools.get_hotel_info import GetHotelInfo
 from .tools.get_distance import GetDistance, get_distance
 from .tools.search_api import SearchAPI, search_api
 from .tools.nearby_places import NearbyPlaces, get_nearby_places
@@ -12,7 +12,7 @@ import copy
 
 load_dotenv()
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp", api_key=os.getenv('GOOGLE_API_KEY'))
-llm_with_tools = llm.bind_tools([GetHotelInfo, GetDistance, SearchAPI])
+llm_with_tools = llm.bind_tools([GetHotelInfo, GetDistance, SearchAPI, NearbyPlaces])
 
 
 class HotelChatAgent:
@@ -43,6 +43,7 @@ class HotelChatAgent:
         self.messages.append(HumanMessage(prompt))
         context_messages = copy.deepcopy(self.messages)            # context messages will contain toll calls
         ai_msg = await llm_with_tools.ainvoke(context_messages)
+        print(ai_msg)
         if not ai_msg.tool_calls:
             self.messages.append(AIMessage(ai_msg.content))
             return ai_msg.content

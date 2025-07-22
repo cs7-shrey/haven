@@ -34,13 +34,6 @@ async def audio_websocket(
 
     session = RealtimeTranscriptionSession(user_id=current_user.user_id, ws=ws, language=language)
 
-    # message = await ws.receive()
-    # print(message)
-    
-    # if 'json' not in message:
-    #     await ws.close(code=1008, reason="Invalid message format")
-    #     return
-
     json_data = await ws.receive_json()
 
     previous_filters =  json_data['previous_filters']

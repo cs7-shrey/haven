@@ -21,7 +21,9 @@ const Message: React.FC<Props> = ({sender, text}) => {
         font-medium        
         `}
         >
-            <ReactMarkdown children={text} remarkPlugins={[remarkGfm]} />
+            <ReactMarkdown remarkPlugins={[remarkGfm]} > 
+                {text}
+            </ReactMarkdown> 
         </div>
     )
 }

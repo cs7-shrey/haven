@@ -1,6 +1,8 @@
 import asyncio
+from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, WebSocket, Query, WebSocketDisconnect, WebSocketException
 from sqlalchemy.orm import Session
+import os
 
 from app.database import get_db
 from app.schemas import ChatMode, TokenData
@@ -9,10 +11,17 @@ from app.services.crud.hotel.info import get_hotel_info_by_id, get_hotel_room_in
 from app.services.hotel_info_agent import HotelChatAgent
 from app.services.queues import queue_maps
 from app.services.transcription.socket_manager import RealtimeTranscriptionSession
+from app.services.transcription.speech import Speech
 
 from .schemas import HotelInfoResponse, HotelRoomResponse
 
 router = APIRouter(prefix="/hotel", tags=["hotel"])
+
+load_dotenv()
+
+API_KEY = os.getenv('SPEECHMATICS_API_KEY')
+PATH_TO_FILE = "received_audio.wav"
+CONNECTION_URL = "wss://eu2.rt.speechmatics.com/v2"
 
 @router.get("/{id}", response_model=HotelInfoResponse)
 async def get_hotel_data(id: int, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
@@ -70,12 +79,16 @@ async def exp_chat_ws(
     ws: WebSocket, 
     hotel_name: str = Query(...), 
     hotel_location: str = Query(...), 
-    current_user: TokenData = Depends(socket_get_current_client)
+    current_user: TokenData = Depends(socket_get_current_client),
+    language: str = Query("en")
 ):
     await ws.accept()
+    
+    # Receive hotel info after accepting connection
     json_data = await ws.receive_json()
     agent = HotelChatAgent(hotel_name=hotel_name, location=hotel_location, hotel_info=json_data['hotel_info'])
 
+    # Start the chat session
     while True:
         try:
             mode = await ws.receive_text()
@@ -89,8 +102,17 @@ async def exp_chat_ws(
                 session = RealtimeTranscriptionSession(
                     user_id=current_user.user_id, 
                     ws=ws, 
-                    language=json_data['language']
+                    language=language
                 )
+                print(CONNECTION_URL, API_KEY, language)
+                session.ws_speech = Speech(
+                    connection_url=CONNECTION_URL, 
+                    api_key=API_KEY, 
+                    language_code=language, 
+                    audio_encoding='pcm_s16le', 
+                    max_delay=2
+                )
+                session.setup_logging()
                 await session.start_transcription_task()
 
                 try:

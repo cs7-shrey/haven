@@ -62,17 +62,20 @@ const HotelDescription = () => {
                     </div>
                 </div>
             </div>
-            {!chatBoxOpen && 
-            <div className="fixed z-50 bottom-2 right-2 rounded-lg size-16 flex justify-center items-center bg-primary">
-                <button className="w-full h-full p-4" onClick={onClick}>
-                    <Bot color="white" size={28}/>
-                </button>
-            </div>}
             {
-                chatBoxOpen &&
-                <div className="fixed bottom-2 right-2 inset-0 z-50 h-full w-full bg-transparent/30">
-                    <ChatBox onClose={onClick}/>
-                </div>
+            hotelData ? 
+                (
+                    !chatBoxOpen ? 
+                    <div className="fixed z-50 bottom-2 right-2 rounded-lg size-16 flex justify-center items-center bg-primary">
+                        <button className="w-full h-full p-4" onClick={onClick}>
+                            <Bot color="white" size={28}/>
+                        </button>
+                    </div> : 
+                    <div className="fixed bottom-2 right-2 inset-0 z-50 h-full w-full bg-transparent/30">
+                        <ChatBox onClose={onClick} hotelName={hotelData?.name} hotelLocation={hotelData?.location} />
+                    </div>
+                ) 
+                : <></>
             }
         </div>
     )

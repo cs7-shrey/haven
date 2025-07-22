@@ -53,7 +53,6 @@ export const useHotelDescStore = create<HotelDescStore>()((set) => ({
     setHotelData: (data) => set({ hotelData: data }),
     setRoomData: (data) => set({ roomData: data }),
     getHotelData : async (id)  => {
-        // set({hotelData: null})
         try {
             const response = await axiosInstance.get(`/hotel/${id}`)
             set({ hotelData: {
@@ -73,7 +72,6 @@ export const useHotelDescStore = create<HotelDescStore>()((set) => ({
         }
     },   
     getRoomData: async (id) => {
-        // set({roomData: []})
         try {
             const response= await axiosInstance.get(`/hotel/${id}/rooms`)
             const data = response.data

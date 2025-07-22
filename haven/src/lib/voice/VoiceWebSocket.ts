@@ -12,7 +12,6 @@ export class VoiceWebSocketService {
         this.socket = new WebSocket(connectionURL)
         try {
             const response = await new Promise((resolve, reject) => {
-                console.log('C')
                 if (this.socket) {
                     this.socket.onopen = () => {
                         resolve(true)

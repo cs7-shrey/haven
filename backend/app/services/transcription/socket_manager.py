@@ -64,6 +64,7 @@ class RealtimeTranscriptionSession:
                     
                     elif 'text' in message:
                         text = message['text']
+
                         if text == 'stop_recording':
                             await self.ws_speech.audio_queue.put(None)
                             self.state = SessionState.PROCESSING_AUDIO
