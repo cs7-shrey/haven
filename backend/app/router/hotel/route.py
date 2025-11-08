@@ -24,14 +24,14 @@ PATH_TO_FILE = "received_audio.wav"
 CONNECTION_URL = "wss://eu2.rt.speechmatics.com/v2"
 
 @router.get("/{id}", response_model=HotelInfoResponse)
-async def get_hotel_data(id: int, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
+async def get_hotel_data(id: int, db: Session = Depends(get_db)):
     try:
         return get_hotel_info_by_id(id, db)
     except Exception as e:
         print(e)
 
 @router.get("/{id}/rooms", response_model=list[HotelRoomResponse])
-async def get_hotel_rooms(id: int, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
+async def get_hotel_rooms(id: int, db: Session = Depends(get_db)):
     try:
         return get_hotel_room_info(id, db)
     except Exception as e:

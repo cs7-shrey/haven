@@ -41,6 +41,11 @@ export async function loginUser(email: string, password: string) {
     return response
 }
 
+export async function signupUser(name: string, email: string, password: string) {
+    const response = await axiosInstance.post('/users/signup', { name, email, password });
+    return response
+}
+
 export async function logoutUser() {
     const response = await axiosInstance.post('/users/logout');
     return response

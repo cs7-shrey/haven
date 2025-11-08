@@ -8,13 +8,23 @@ import HotelNavbar from "@/components/refactor/HotelNavbar";
 import { Bot } from "lucide-react";
 import ChatBox from "@/components/chat/ChatBox";
 import { useParams, useRouter } from "next/navigation";
+import { useAuthContext } from "@/context/AuthContext";
+import { checkAuth } from "@/store/useAuthStore";
 
 const HotelDescription = () => {
     const { hotelData, roomData } = useHotelDescStore();
     const [chatBoxOpen, setChatBoxOpen] = useState(false);
-    const onClick = () => {
-        setChatBoxOpen((prev) => !prev);
+    const { openLoginPopup } = useAuthContext();
+
+    const onClick = async () => {
+        const isAuth = await checkAuth();
+        if (isAuth) {
+            setChatBoxOpen((prev) => !prev);
+        } else {
+            openLoginPopup();
+        }
     }
+
     const router = useRouter();
     const params = useParams();
     const id = params.id as string;

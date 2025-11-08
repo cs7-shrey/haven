@@ -1,62 +1,25 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
-import { IoIosClose } from "react-icons/io";
+import { IoIosClose } from "react-icons/io"
 import { useAuthContext } from "@/context/AuthContext"
 import { motion } from "motion/react"
 import { AnimatePresence } from "motion/react"
-import { useLogin } from "@/hooks/auth/useLogin"
+import LoginForm from "./LoginForm"
+import SignupForm from "./SignUpForm"
 
-const formSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-})
+type AuthType = "login" | "signup";
 
 export default function AuthPopup() {
-  const [showPassword, setShowPassword] = useState(false)
-  const { isLoggingIn, login } = useLogin();
-
   const { isLoginPopupOpen, closeLoginPopup } = useAuthContext()
+  const [authType, setAuthType] = useState<AuthType>("login");
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  })
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const success = await login(values.email, values.password);
-    if(success) {
-      closeLoginPopup();
-    }
-  }
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
             closeLoginPopup();
-        }
+          }
         };
 
         if (isLoginPopupOpen) {
@@ -109,85 +72,22 @@ export default function AuthPopup() {
                     </CardDescription>
                     </CardHeader>
                     <CardContent>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                <Input
-                                    placeholder="Enter your email"
-                                    type="email"
-                                    {...field}
-                                />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                <div className="relative">
-                                    <Input
-                                    placeholder="Enter your password"
-                                    type={showPassword ? "text" : "password"}
-                                    {...field}
-                                    />
-                                    <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="sm"
-                                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                    {showPassword ? (
-                                        <EyeOff className="h-4 w-4" />
-                                    ) : (
-                                        <Eye className="h-4 w-4" />
-                                    )}
-                                    </Button>
-                                </div>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                        <div className="flex items-center justify-between">
-                            <Link
-                            href="/forgot-password"
-                            className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
-                            >
-                            Forgot password?
-                            </Link>
-                        </div>
-                        <Button type="submit" className="w-full" disabled={isLoggingIn}>
-                            {isLoggingIn ? (
-                            <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Signing in...
-                            </>
-                            ) : (
-                            "Sign in"
-                            )}
-                        </Button>
-                        </form>
-                    </Form>
+                        {authType === "login" && <LoginForm />}
+                        {authType === "signup" && <SignupForm />}
                     <div className="mt-6 text-center text-sm">
-                        Don&apos;t have an account?{" "}
-                        <Link
-                        href="/signup"
-                        className="text-primary underline-offset-4 hover:underline"
+                        {authType === "login" ? "New to Haven? " : "Already have an account? "}
+                        <div
+                        className="text-primary inline underline-offset-4 hover:underline"
+                        onClick={() => {
+                          if (authType === "login") {
+                            setAuthType("signup");
+                          } else {
+                            setAuthType("login");
+                          }
+                        }}
                         >
-                        Sign up
-                        </Link>
+                        {authType === "login" ? "Sign up" : "Log in"}
+                        </div>
                     </div>
                     </CardContent>
                 </Card>

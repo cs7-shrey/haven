@@ -73,16 +73,23 @@ export async function signUp(name: string, email: string, password: string) {
 }
 
 export async function checkAuth() {
-    const { setIsCheckingAuth, setAuthUserEmail } = useAuthStore.getState();
+    const { setIsCheckingAuth, setAuthUserEmail, setIsLoginPopupOpen } = useAuthStore.getState();
     try {
         setIsCheckingAuth(true);
         const response = await axiosInstance.get('/users/checkauth');
-        if (response.status !== 200) {
-            throw new Error('Failed to check auth');
-        }
         setAuthUserEmail(response.data.email);
+
+        return true;
     }
     catch (error) {
+        if(isAxiosError(error)) {
+            const e = error as AxiosError;
+            if (e.response?.status === 401) {
+                setAuthUserEmail(null);
+                setIsLoginPopupOpen(true);
+                return false; 
+            }
+        }
         console.error(error);
     }
     finally {
