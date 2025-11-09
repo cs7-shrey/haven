@@ -8,8 +8,8 @@ import AmenityCard from '../ui/AmenityCard';
 const RoomAmenityFilter = () => {
     const [amenityList, setAmenityList] = useState<AmenityUI[]>([]);
     const { tempRoomAmenities, setTempRoomAmenities } = useTempFilterStore();
+    
     useEffect(() => {
-        // const { roomAmenities } = useSearchStore.getState();
         const { roomAmenities } = useSearchStore.getState();
         setTempRoomAmenities(roomAmenities);
     }, [setTempRoomAmenities]);
@@ -28,8 +28,8 @@ const RoomAmenityFilter = () => {
             }));
         };
         getRoomAmenities();
-
     }, [tempRoomAmenities])
+    
     const returnOnClick = (isChecked: boolean, text: string, code: string) => {
         const onClick = () => {
             if (!isChecked) {
@@ -41,20 +41,23 @@ const RoomAmenityFilter = () => {
         }
         return onClick
     }
+    
     return (
-        <>
-            <div className="mt-6 mb-1 px-1 font-bold">Room Amenities</div>
-            <div>
-                {amenityList.map((amenity) => (
-                    <AmenityCard
-                        key={amenity.code}
-                        text={amenity.name ?? ''}
-                        isChecked={amenity.isChecked}
-                        handleClick={returnOnClick(amenity.isChecked, amenity.name ?? '', amenity.code)}
-                    />
-                ))}
-            </div>
-        </>
+        <div className="space-y-1">
+            {amenityList.map((amenity) => (
+                <AmenityCard
+                    key={amenity.code}
+                    text={amenity.name ?? ''}
+                    isChecked={amenity.isChecked}
+                    handleClick={returnOnClick(amenity.isChecked, amenity.name ?? '', amenity.code)}
+                />
+            ))}
+            {amenityList.length === 0 && (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                    Loading amenities...
+                </p>
+            )}
+        </div>
     )
 }
 

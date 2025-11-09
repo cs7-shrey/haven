@@ -11,18 +11,18 @@ import Filters from '@/components/filters/Filters';
 import NotFoundCard from '@/components/ui/NotFoundCard';
 import HotelCard from '@/components/HotelCard';
 import { SlidersHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 import useHotelSearch from '@/hooks/hotels/useHotelSearch';
 import toast from 'react-hot-toast';
 
 
 export default function Hotels() {
-    const [filtersDropdown, setFiltersDropdown] = useState(false);
+    const [filtersOpen, setFiltersOpen] = useState(false);
     const { waitingForMessage } = useSocketStore();
     const { hotels } = useHotelStore();
-    const filtersClick = () => {
-        setFiltersDropdown((prev) => !prev);
-    }
+    
     const onError = useCallback((err: string) => {
         toast.error(err)
     }, [])
@@ -40,34 +40,28 @@ export default function Hotels() {
     }, [waitingForMessage]);
 
     return (
-        <div className="relative"
-        >
+        <div className="relative">
             <nav className="bg-primary px-4 sm:sticky sm:top-0 z-50">
                 <TopBar />
             </nav>
-            <div className="relative lg:relative sm:flex md:grid md:grid-cols-12 px-4 sm:px-8 bg-[#EFF3F8] min-h-screen"               /*bg-[#EFF3F8] */
-            >   
+            <div className="relative lg:relative sm:flex md:grid md:grid-cols-12 px-4 sm:px-8 bg-[#EFF3F8] min-h-screen">
                 <div className="col-span-2 overflow-y-auto md:col-start-2 md:col-span-10 lg:col-start-1 lg:col-span-7 flex flex-col gap-4">
-                    <div className="p-4 relative z-20">
-                        <button
-                            onClick={filtersClick}
-                            className="relative z-30 flex gap-2 px-4 items-center bg-secondary p-2 rounded-md text-primary-foreground"
+                    <div className="py-4 relative z-20">
+                        <Button
+                            onClick={() => setFiltersOpen(true)}
+                            variant="outline"
+                            className="flex gap-2 items-center shadow-sm hover:shadow-md transition-shadow"
                         >
-                            <SlidersHorizontal size={18} strokeWidth={2} color="white" />
+                            <SlidersHorizontal size={18} strokeWidth={2} />
                             Filters
-                        </button>
-                        {filtersDropdown && (
-                            <>
-                                <div
-                                    className="fixed inset-0 bg-black/20 z-30"
-                                    onClick={filtersClick}
-                                />
-                                <div className="fixed lg:absolute bottom-0 lg:bottom-auto left-0 right-0 lg:left-4 lg:right-auto lg:top-full z-40 transform transition-transform duration-300 ease-in-out">
-                                    <Filters filterIconClick={filtersClick}/>
-                                </div>
-                            </>
-                        )}
+                            <Badge variant="secondary" className="ml-1">
+                                {hotels.length}
+                            </Badge>
+                        </Button>
                     </div>
+                    
+                    <Filters open={filtersOpen} onOpenChange={setFiltersOpen} />
+                    
                     <div className='flex flex-col gap-4 relative'>
                         {hotels.map((hotel) => (
                             <HotelCard key={hotel.id} {...hotel} />

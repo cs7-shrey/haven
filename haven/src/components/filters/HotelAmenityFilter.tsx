@@ -7,13 +7,16 @@ import AmenityCard from '../ui/AmenityCard';
 export interface AmenityUI extends Amenity {
     isChecked: boolean;
 }
+
 const HotelAmenityFilter = () => {
     const [amenityList, setAmenityList] = useState<AmenityUI[]>([]);
     const { tempHotelAmenities, setTempHotelAmenities } = useTempFilterStore();
+    
     useEffect(() => {
         const { hotelAmenities } = useSearchStore.getState();
         setTempHotelAmenities(hotelAmenities);
     }, [setTempHotelAmenities]);
+    
     useEffect(() => {
         const getHotelAmenities = async () => {
             let hotelAmenitiesFromLocal: Amenity[] = JSON.parse(localStorage.getItem("hotelAmenities") || "[]");
@@ -41,20 +44,23 @@ const HotelAmenityFilter = () => {
         }
         return onClick;
     }
+    
     return (
-        <>
-            <div className="mt-6 mb-1 px-1 font-bold">Amenities</div>
-            <div>
-                {amenityList.map((amenity) => (
-                    <AmenityCard
-                        key={amenity.code}
-                        text={amenity.name ?? ''}
-                        isChecked={amenity.isChecked}
-                        handleClick={returnOnClick(amenity.isChecked, amenity.name ?? '', amenity.code)}
-                    />
-                ))}
-            </div>
-        </>
+        <div className="space-y-1">
+            {amenityList.map((amenity) => (
+                <AmenityCard
+                    key={amenity.code}
+                    text={amenity.name ?? ''}
+                    isChecked={amenity.isChecked}
+                    handleClick={returnOnClick(amenity.isChecked, amenity.name ?? '', amenity.code)}
+                />
+            ))}
+            {amenityList.length === 0 && (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                    Loading amenities...
+                </p>
+            )}
+        </div>
     )
 }
 

@@ -1,34 +1,39 @@
 import React from 'react';
+import { Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Props {
     text: string;
     isChecked: boolean;
     handleClick: () => void;
 }
-const AmenityCard: React.FC<Props> = ({ text, isChecked, handleClick }) => {
 
+const AmenityCard: React.FC<Props> = ({ text, isChecked, handleClick }) => {
     return (
         <div
-            className="flex items-center gap-3 hover:bg-gray-50 rounded-lg py-4 px-2 cursor-pointer select-none"
+            className={cn(
+                "flex items-center gap-3 rounded-lg py-3 px-3 cursor-pointer select-none transition-all",
+                "hover:bg-accent border border-transparent",
+                isChecked && "bg-accent/50 border-primary/20"
+            )}
             onClick={handleClick}
         >
-            <div className={`w-5 h-5 border rounded flex items-center justify-center bg-white
-        ${isChecked ? 'border-gray-400' : 'border-gray-300'}`}>
+            <div className={cn(
+                "w-5 h-5 rounded border-2 flex items-center justify-center transition-all shrink-0",
+                isChecked 
+                    ? "bg-primary border-primary" 
+                    : "bg-background border-muted-foreground/30"
+            )}>
                 {isChecked && (
-                    <svg
-                        className="w-3 h-3 text-black"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
+                    <Check className="w-3 h-3 text-primary-foreground" strokeWidth={3} />
                 )}
             </div>
-            <span className="text-gray-700">{text}</span>
+            <span className={cn(
+                "text-sm",
+                isChecked ? "font-medium text-foreground" : "text-muted-foreground"
+            )}>
+                {text}
+            </span>
         </div>
     );
 };

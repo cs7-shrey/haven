@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import HotelStar from '../ui/HotelStar'
+import { Star } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface Props {
     hotelStar: number[];
     setHotelStar: (hotelStar: number[]) => void;
 }
+
 const HotelStarFilter: React.FC<Props> = ({hotelStar, setHotelStar}) => {
     const [hotelStarState, setHotelStarState] = useState([
         { text: "0+", isSelected: true },
@@ -29,7 +31,6 @@ const HotelStarFilter: React.FC<Props> = ({hotelStar, setHotelStar}) => {
                 })
             })
         }
-
     }, [hotelStar])
 
     const handleClickFunction = (selected: boolean, text: string) => {
@@ -57,18 +58,45 @@ const HotelStarFilter: React.FC<Props> = ({hotelStar, setHotelStar}) => {
     }
     
     return (
-        <div>
-            <div className="mt-4 mb-2 font-bold">Hotel Class</div>
-            <div className="flex gap-2">
-                {hotelStarState.map((star) => (
-                    <HotelStar
+        <div className="grid grid-cols-5 gap-2">
+            {hotelStarState.map((star) => {
+                const starNum = star.text === "0+" ? 0 : parseInt(star.text);
+                return (
+                    <button
                         key={star.text}
-                        text={star.text}
-                        selected={star.isSelected}
                         onClick={handleClickFunction(star.isSelected, star.text)}
-                    />
-                ))}
-            </div>
+                        className={cn(
+                            "flex flex-col items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all",
+                            "hover:border-primary/50 hover:bg-accent",
+                            star.isSelected 
+                                ? "border-primary bg-primary/10 shadow-sm" 
+                                : "border-border bg-background"
+                        )}
+                    >
+                        {star.text === "0+" ? (
+                            <Star className="h-5 w-5 text-muted-foreground" />
+                        ) : (
+                            <div className="flex">
+                                {Array.from({ length: starNum }).map((_, i) => (
+                                    <Star 
+                                        key={i}
+                                        className={cn(
+                                            "h-3 w-3",
+                                            star.isSelected ? "fill-primary text-primary" : "fill-muted-foreground text-muted-foreground"
+                                        )}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                        <span className={cn(
+                            "text-xs font-medium whitespace-nowrap",
+                            star.isSelected ? "text-primary" : "text-foreground"
+                        )}>
+                            {star.text}
+                        </span>
+                    </button>
+                );
+            })}
         </div>
     )
 }

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import NumberBox from "../ui/NumberBox";
+import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
     rating: number;
     setRating: (rating: number) => void;
 }
+
 const UserRatingFilter: React.FC<Props> = ({rating, setRating}) => {
     const [isZeroSelected, setIsZeroSelected] = useState(true);
     const [isThreeSelected, setIsThreeSelected] = useState(false);
@@ -35,29 +37,44 @@ const UserRatingFilter: React.FC<Props> = ({rating, setRating}) => {
                 break;
         }
     }, [rating]);
-    const numberBoxData = [
-        {text: "0+", isSelected: isZeroSelected},
-        {text: "3+", isSelected: isThreeSelected},
-        {text: "4+", isSelected: isFourSelected},
-        {text: "4.5+", isSelected: isFourPointFiveSelected},
-    ]
+    
+    const ratingOptions = [
+        {text: "Any", value: 0, isSelected: isZeroSelected},
+        {text: "3+", value: 3, isSelected: isThreeSelected},
+        {text: "4+", value: 4, isSelected: isFourSelected},
+        {text: "4.5+", value: 4.5, isSelected: isFourPointFiveSelected},
+    ];
+    
     return (
-        <>
-            <div className="my-2 font-bold">User Rating</div>
-            <div className="flex  justify-between gap-4">
-                {numberBoxData.map((element, index) => {
-                    return (
-                    <NumberBox 
-                        key={index} 
-                        text={element.text} 
-                        isSelected={element.isSelected} 
-                        onClick={() => setRating(Number(element.text.split("+")[0]))}
+        <div className="grid grid-cols-4 gap-2">
+            {ratingOptions.map((option, index) => (
+                <button
+                    key={index}
+                    onClick={() => setRating(option.value)}
+                    className={cn(
+                        "flex flex-col items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all",
+                        "hover:border-primary/50 hover:bg-accent",
+                        option.isSelected 
+                            ? "border-primary bg-primary/10 shadow-sm" 
+                            : "border-border bg-background"
+                    )}
+                >
+                    <Star 
+                        className={cn(
+                            "h-5 w-5",
+                            option.isSelected ? "fill-primary text-primary" : "text-muted-foreground"
+                        )} 
                     />
-                )
-                })}
-            </div>
-        </>
-    )
-}
+                    <span className={cn(
+                        "text-sm font-medium",
+                        option.isSelected ? "text-primary" : "text-foreground"
+                    )}>
+                        {option.text}
+                    </span>
+                </button>
+            ))}
+        </div>
+    );
+};
 
-export default UserRatingFilter
+export default UserRatingFilter;
