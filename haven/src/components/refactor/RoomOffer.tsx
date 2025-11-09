@@ -1,4 +1,6 @@
+import { useAuthContext } from "@/context/AuthContext";
 import { formatDate, formatRoomOffer } from "@/lib/utils";
+import { checkAuth } from "@/store/useAuthStore";
 import { useHotelDescStore, type RatePlan } from "@/store/useHotelDescStore";
 import { useSearchStore } from "@/store/useSearchStore";
 import { useRouter } from "next/navigation";
@@ -12,8 +14,17 @@ const RoomOffer: React.FC<Props> = (ratePlan) => {
     const { hotelData } = useHotelDescStore();
     const { checkIn, checkOut } = useSearchStore();
     const router = useRouter();
-    const handleClick = () => {
-        router.push(`/booking?checkIn=${formatDate(checkIn)}&checkOut=${formatDate(checkOut)}&hotelId=${hotelData?.id}&roomTypeId=${ratePlan.roomTypeId}&planId=${ratePlan.plan_id}`)
+    const { openLoginPopup } = useAuthContext();
+
+    const handleClick = async () => {
+        const isAuth = await checkAuth();
+        console.log("got here")
+
+        console.log(isAuth);
+        if(isAuth)
+            router.push(`/booking?checkIn=${formatDate(checkIn)}&checkOut=${formatDate(checkOut)}&hotelId=${hotelData?.id}&roomTypeId=${ratePlan.roomTypeId}&planId=${ratePlan.plan_id}`)
+        else 
+            openLoginPopup();
     }
 
     return (

@@ -28,7 +28,7 @@ async def get_booking_by_id(id: int, current_user: TokenData = Depends(get_curre
     except Exception as e:
         print(e)
 
-@router.post('/book')
+@router.post('/hotel/book')
 async def book_hotel_route(booking_details: BookHotelSchema, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_client)):
     # checking details
     res = check_booking_detail_validity(db, int(booking_details.hotel_id), booking_details.room_type_id, booking_details.rate_plan_id)

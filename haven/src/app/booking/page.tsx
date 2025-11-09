@@ -89,7 +89,7 @@ const Booking = () => {
     const bookHotel = async () => {
         try {
             setIsBooking(true);
-            const response = await axiosInstance.post('/hotel/book', {
+            const response = await axiosInstance.post('/user/hotel/book', {
                 hotel_id: hotelId,
                 room_type_id: roomTypeId,
                 rate_plan_id: planId,
