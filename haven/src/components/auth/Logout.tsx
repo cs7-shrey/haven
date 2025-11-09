@@ -1,13 +1,28 @@
+"use client"
 import { User } from "lucide-react"
 import { Button } from "../ui/button";
 import { FaUserCircle } from "react-icons/fa";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthContext } from "@/context/AuthContext";
+import { useLogout } from "@/hooks/auth/useLogout";
+import toast from "react-hot-toast";
 
-interface Props {
-    loggedIn: boolean;
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
-const Logout: React.FC<Props> = ({ loggedIn, onClick }) => {
-    // loggedIn = true;
+const Logout: React.FC = () => {
+    const { authUserEmail } = useAuthStore();
+    const { openLoginPopup } = useAuthContext();
+    const { logout } = useLogout({
+        onError: (err) => toast.error(err)
+    });
+    const loggedIn = authUserEmail !== null
+    const onClick = () => {
+            const isLoggedIn = authUserEmail !== null;
+            if(!isLoggedIn) {
+              openLoginPopup();
+            }
+            else {
+              logout();
+            }
+          }
     return (
         <Button
             onClick={onClick}

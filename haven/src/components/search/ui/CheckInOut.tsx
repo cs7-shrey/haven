@@ -8,13 +8,13 @@ interface CheckProps {
 
 export const Check: React.FC<CheckProps> = ({check, setCheck, label}) => {
     return (
-        <div className='flex flex-col border-r-2 h-full justify-end pr-2'>
-            <div className="text-secondary/55 text-xs">
+        <div className='flex flex-col w-full h-full justify-end'>
+            <div className="text-muted-foreground text-xs">
                 {label}
             </div>
             <input
                 type="date"
-                className="pb-2 rounded-md text-accentForeground font-extrabold"
+                className="rounded-md text-accentForeground font-extrabold"
                 value={formatDate(check)}
                 onChange={(e) => setCheck(new Date(e.target.value))}
             />

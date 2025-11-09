@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface Props {
     onClick: (e: React.MouseEvent) => void;
@@ -7,7 +8,9 @@ interface Props {
 const SearchButton: React.FC<Props> = ({onClick}) => {
     return (
         <Button
-            className="flex rounded-none h-full w-full justify-center items-center px-4 py-2 text-white text-md bg-secondary"
+            className={cn("flex rounded-none h-full w-full justify-center items-center px-4 py-2", 
+                "text-white text-md bg-secondary"
+            )}
             onClick={onClick}
             type="button"
         >

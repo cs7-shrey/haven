@@ -148,3 +148,6 @@
 button {
   cursor: pointer;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: -1.5rem; /* Adjust this value as needed */
+}

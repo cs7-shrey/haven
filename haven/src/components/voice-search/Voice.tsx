@@ -22,8 +22,8 @@ const Voice: React.FC<Props> = ({ isStreaming, toggleStreaming, sourceNodeRef })
         }
     }
     return (
-        <div className="flex justify-center bg-background w-fit h-fit py-2 rounded-md">
-            <div className="self-center rounded-md">
+        <div className="flex justify-center bg-background w-fit h-fit py-2">
+            <div className="self-center">
                 <button onClick={onClick} disabled={false} className="focus:outline-none">
                     <div className="h-12 w-16 rounded-full flex flex-col justify-start items-center" id="container">
                         <div className="h-10 w-20 flex justify-center items-end">

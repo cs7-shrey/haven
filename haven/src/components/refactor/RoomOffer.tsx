@@ -13,6 +13,8 @@ const RoomOffer: React.FC<Props> = (ratePlan) => {
     const { checkIn, checkOut } = useSearchStore();
     const router = useRouter();
     const handleClick = () => {
+        // TODO: remove this when the page is ready
+        return;
         router.push(`/hotel/booking?checkIn=${formatDate(checkIn)}&checkOut=${formatDate(checkOut)}&hotelId=${hotelData?.id}&roomTypeId=${ratePlan.roomTypeId}&planId=${ratePlan.plan_id}`)
     }
 
