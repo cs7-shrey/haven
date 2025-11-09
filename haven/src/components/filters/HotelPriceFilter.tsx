@@ -1,6 +1,5 @@
 import { useTempFilterStore } from "@/store/useTempFilterStore";
-import Slider from "../ui/Slider";
-import "react-range-slider-input/dist/style.css";
+import { Slider } from "../ui/Slider";
 import { formatAmount } from "@/lib/utils";
 import { useEffect } from "react";
 import { useSearchStore } from "@/store/useSearchStore";
@@ -16,7 +15,7 @@ const HotelPriceFilter = () => {
         setTempMaxBudget(maxBudget);
     }, [minBudget, maxBudget, setTempMinBudget, setTempMaxBudget]);
     
-    const setValue = (newValues: [number, number]) => {
+    const handleValueChange = (newValues: number[]) => {
         const [newMin, newMax] = newValues;
         if (newMin >= newMax) return;
         setTempMinBudget(newMin);
@@ -25,15 +24,14 @@ const HotelPriceFilter = () => {
     
     return (
         <div className="space-y-6">
-            <div className="px-1">
+            <div className="px-1 pt-2">
                 <Slider
                     min={0}
                     max={50000}
                     step={100}
                     defaultValue={[500, 10000]}
                     value={value}
-                    onInput={setValue}
-                    rangeSlideDisabled={true}
+                    onValueChange={handleValueChange}
                 />
             </div>
             <div className="flex items-center justify-between gap-4">

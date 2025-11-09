@@ -82,7 +82,7 @@ const Filters: React.FC<Props> = ({ open, onOpenChange }) => {
                             </SheetDescription>
                         </div>
                         {getActiveFiltersCount() > 0 && (
-                            <Badge variant="secondary" className="ml-2">
+                            <Badge variant="secondary" className="ml-2 mt-auto">
                                 {getActiveFiltersCount()} active
                             </Badge>
                         )}

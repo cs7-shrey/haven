@@ -54,7 +54,7 @@ export default function Hotels() {
                         >
                             <SlidersHorizontal size={18} strokeWidth={2} />
                             Filters
-                            <Badge variant="secondary" className="ml-1">
+                            <Badge variant="outline" className="ml-1">
                                 {hotels.length}
                             </Badge>
                         </Button>
