@@ -4,7 +4,7 @@ import { faBed, /* faRulerCombined, */ faUser } from '@fortawesome/free-solid-sv
 import RoomOffer from "./RoomOffer";
 import { type RoomType } from "@/store/useHotelDescStore";
 import RoomMoreInfo from "./RoomMoreInfo";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 type Props = RoomType
 
@@ -13,14 +13,6 @@ const RoomOption: React.FC<Props> = (roomType: RoomType) => {
     const handleClick = () => {
         setRoomMoreInfo((prev) => !prev)
     }
-    useEffect(() => {
-        if (roomMoreInfo) {
-            document.body.style.overflow = 'hidden';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [roomMoreInfo]);
     const placeholderImg = "/assets/placeholderImg.jpg";
 
     return (
@@ -52,9 +44,6 @@ const RoomOption: React.FC<Props> = (roomType: RoomType) => {
                     <p className="max-w-[50%] text-center text-sm">?
                         <FontAwesomeIcon icon={faBed} className="text-gray-500" /> {roomType.beds?.[0]?.type ? roomType.beds?.[0]?.type : "Bedroom 1-1 king bed / 2 twin beds"} {/* TODO: FIX THIS */}
                     </p>
-                    {/* <p className="max-w-[50%] text-center text-sm">
-            <FontAwesomeIcon icon={faRulerCombined} className="text-gray-500" /> 350 sqft coverage
-          </p> */}
                 </div>
             </div>
 
@@ -68,7 +57,12 @@ const RoomOption: React.FC<Props> = (roomType: RoomType) => {
             </div>
             {
                 roomMoreInfo && (
-                    <RoomMoreInfo images={roomType.room_photos} onClose={handleClick} amenities={roomType.display_amenities}/>
+                    <RoomMoreInfo 
+                        images={roomType.room_photos} 
+                        open={roomMoreInfo}
+                        onOpenChange={setRoomMoreInfo}
+                        amenities={roomType.display_amenities}
+                    />
                 )
             }
 

@@ -1,7 +1,7 @@
 // import placeholderImg from "/placeholderImg.jpg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed, faMap, faUser, faUtensils } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HotelImagePopup from "./HotelImagesPopup";
 import { Star } from "lucide-react";
 
@@ -23,13 +23,6 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
         setShowPopup((prev) => !prev);
     }
     const placeholderImg = "/assets/placeholderImg.jpg"
-    useEffect(() => {
-        if (showPopup) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
-    })
     return (
         <div className="flex flex-col w-full items-center shadow-md p-4">
             {/* Container for images and pricing */}
@@ -149,7 +142,11 @@ const ImageBox: React.FC<Props> = ({ name, location, hotelStar, userRating, imag
                     {
                         showPopup
             &&
-            <HotelImagePopup images={images ? images.map((img) => 'https:' + img) : []} onClose={handleClick} />
+            <HotelImagePopup 
+                images={images ? images.map((img) => 'https:' + img) : []} 
+                open={showPopup}
+                onOpenChange={setShowPopup}
+            />
                     }
                 </div>
             </div>

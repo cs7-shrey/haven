@@ -5,7 +5,6 @@ import { useHotelStore } from '@/store/useHotelStore';
 import { useSocketStore } from '@/store/useSocketStore';
 
 import { HashLoader } from 'react-spinners';
-// import GoogleMaps from '@/components/maps/GoogleMaps';
 import TopBar from '@/components/TopBar';
 import Filters from '@/components/filters/Filters';
 import NotFoundCard from '@/components/ui/NotFoundCard';
@@ -26,7 +25,7 @@ export default function Hotels() {
     const onError = useCallback((err: string) => {
         toast.error(err)
     }, [])
-    const {loading } = useHotelSearch({
+    const { loading } = useHotelSearch({
         onError: onError
     })
 
