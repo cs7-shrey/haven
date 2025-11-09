@@ -62,7 +62,7 @@ export default function Hotels() {
                     
                     <Filters open={filtersOpen} onOpenChange={setFiltersOpen} />
                     
-                    <div className='flex flex-col gap-4 relative'>
+                    <div className='flex flex-col gap-4 px-2 relative'>
                         {hotels.map((hotel) => (
                             <HotelCard key={hotel.id} {...hotel} />
                         ))}

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star, MapPin } from 'lucide-react';
 import { type Hotel } from '@/types';
 import { useHotelStore } from '@/store/useHotelStore';
+import { cn } from '@/lib/utils';
 
 const placeholderImg = "/placeholderImg.jpg"
+
 const HotelCard: React.FC<Hotel> = ({
     id,
     name,
@@ -46,13 +48,13 @@ const HotelCard: React.FC<Hotel> = ({
     };
 
     return (
-        <div id={String(id)} 
-            className={`flex rounded-lg w-full bg-white p-[0.2rem]
-            ${selectedHotelId === id ? 'ring-2 ring-inset -ring-offset ring-accentForeground shadow-md' : 'shadow-md'}
-            ${isHovered ? 'shadow-xl': ''} transition-shadow duration-300 ease-in-out 
-            `}
-            style={{
-            }}
+        <div 
+            id={String(id)} 
+            className={cn(
+                "group relative overflow-hidden rounded-xl bg-card border border-border transition-all duration-300 ease-in-out",
+                selectedHotelId === id ? "ring-2 ring-primary shadow-lg" : "shadow-sm",
+                isHovered && "shadow-xl scale-[1.01]"
+            )}
             onMouseEnter={() => {
                 setIsHovered(true);
                 setSelectedHotelId(id);
@@ -60,34 +62,39 @@ const HotelCard: React.FC<Hotel> = ({
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Left side - Main Image and Thumbnail Gallery */}
-            <a href={`/hotel/${id}`} className='w-full h-full flex overflow-hidden rounded-l-lg' target='_blank'>
-                <div className="w-32 md:size-52 lg:size-52 relative flex flex-col rounded-l-lg">
+            <a href={`/hotel/${id}`} className='flex w-full h-full overflow-hidden' target='_blank'>
+                <div className="relative flex flex-col w-32 md:w-52 lg:w-52 shrink-0">
                     {/* Main Image */}
-                    <div className="h-48">
+                    <div className="relative h-48 overflow-hidden">
                         <img 
                             src={images[selectedImageIndex] ? 'https:' + images[selectedImageIndex] : placeholderImg} 
                             alt={`${name} - View ${selectedImageIndex + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
+                        {/* Gradient overlay on main image */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
                     {/* Thumbnail Gallery */}
-                    <div className="flex bg-black/30 p-1 gap-1">
+                    <div className="flex bg-muted/50 backdrop-blur-sm p-1 gap-1">
                         {images.slice(0, 5).map((img, index) => (
                             <div
                                 key={index}
-                                className="w-14 h-14 cursor-pointer relative"
+                                className={cn(
+                                    "w-14 h-14 cursor-pointer relative overflow-hidden rounded-md transition-all duration-200",
+                                    selectedImageIndex === index && "ring-2 ring-primary"
+                                )}
                                 onMouseEnter={() => setSelectedImageIndex(index)}
                             >
                                 <img
-                                    src={img ? 'https:' + img :  placeholderImg}
+                                    src={img ? 'https:' + img : placeholderImg}
                                     alt={`${name} - Thumbnail ${index + 1}`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-200"
                                 />
                                 {/* Show remaining images count on the last visible thumbnail */}
                                 {index === 4 && remainingImages > 0 && (
-                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white/85 text-[8px] md:text-[12px] text-center">
-                                        {/* +{remainingImages} */} VIEW ALL
+                                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white text-[8px] md:text-[10px] font-medium text-center">
+                                        VIEW ALL
                                     </div>
                                 )}
                             </div>
@@ -96,13 +103,15 @@ const HotelCard: React.FC<Hotel> = ({
                 </div>
 
                 {/* Right side - Content */}
-                <div className="flex-1 p-4 flex flex-col sm:flex-row">
+                <div className="flex-1 p-4 md:p-5 flex flex-col sm:flex-row gap-4 bg-card">
                     {/* Hotel Information Section */}
-                    <div className="flex-1">
-                        <h2 className="text-md sm:text-xl font-semibold mb-2">{name}</h2>
+                    <div className="flex-1 space-y-3">
+                        <h2 className="text-md sm:text-xl font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors duration-200">
+                            {name}
+                        </h2>
                     
                         {/* Hotel Class (Star Rating) */}
-                        <div className="flex items-center mb-2">
+                        <div className="flex items-center">
                             {[...Array(hotel_star)].map((_, i) => (
                                 <Star 
                                     key={i} 
@@ -112,33 +121,34 @@ const HotelCard: React.FC<Hotel> = ({
                         </div>
 
                         {/* User Rating Section */}
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-2">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                             <div className='flex items-center gap-2'>
                                 <div className="text-sm sm:text-md font-semibold">{user_rating}</div>
                                 {renderRatingBubbles(user_rating)}
                             </div>
-                            <div className="text-gray-600 text-xs">
+                            <div className="text-muted-foreground text-xs">
                                 {user_rating_count} reviews
                             </div>
                         </div>
 
                         {/* Location */}
-                        <div className="text-gray-600 text-sm sm:text-md">
-                            {location}
+                        <div className="flex items-center gap-1.5 text-muted-foreground text-sm sm:text-md">
+                            <MapPin className="size-4 shrink-0" />
+                            <span className="line-clamp-1">{location}</span>
                         </div>
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-px bg-gray-200 mx-4"></div>
+                    <div className="hidden sm:block w-px bg-border" />
 
-                    {/* base_fare Section */}
+                    {/* Price Section */}
                     {base_fare && (
-                        <div className="">
-                            <div className="text-lg sm:text-xl md:text-2xl w-fit ml-auto font-bold">
-                            ₹{base_fare.toLocaleString()}
+                        <div className="flex flex-col justify-center items-end shrink-0">
+                            <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">
+                                ₹{base_fare.toLocaleString()}
                             </div>
-                            <div className="text-sm ml-auto w-fit text-gray-600">
-                            a night
+                            <div className="text-sm text-muted-foreground">
+                                per night
                             </div>
                         </div>
                     )}
