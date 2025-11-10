@@ -5,13 +5,11 @@ import Logo from "@/components/ui/Logo";
 import { axiosInstance } from "@/lib/axiosConfig";
 import { useHotelDescStore } from "@/store/useHotelDescStore";
 import { useEffect, useState } from "react";
-import placeholderImg from "public/placeholderImg.jpg"
 import BookingDate from "@/components/booking/BookingDate";
 import PriceSummary from "@/components/booking/PriceSummary";
 import BookintRoomDetails from "@/components/booking/BookingRoomDetails";
 import { formatRoomOffer } from "@/lib/utils";
 import BookingButton from "@/components/booking/BookingButton";
-import success from 'public/assets/success.svg'
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface RatePlanDetails {

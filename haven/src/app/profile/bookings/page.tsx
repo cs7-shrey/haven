@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { MapPin, Users, Star } from 'lucide-react';
+import { MapPin, Users, Star, Loader2 } from 'lucide-react';
 import { axiosInstance } from '@/lib/axiosConfig';
 import { useBookingHistoryStore } from '@/store/useBookingHistoryStore';
 
@@ -51,7 +51,7 @@ const BookingHistory = () => {
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <Loader2 className="animate-spin" size={30} />
             </div>
         );
     }

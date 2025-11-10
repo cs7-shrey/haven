@@ -1,5 +1,4 @@
-import { Wallet } from 'lucide-react';
-import { ClipLoader } from 'react-spinners';
+import { Loader2, Wallet } from 'lucide-react';
 
 interface Props {
     onClick: () => void;
@@ -36,9 +35,11 @@ const BookingButton: React.FC<Props> = ({ onClick, disabled }) => {
                 </button>
                 {
                     disabled && (
-                        <div className="absolute inset-0 z-50 bg-secondary/80 h-full flex items-center justify-center w-full border "
+                        <div 
+                            className="absolute inset-0 z-50 bg-secondary/80 h-full 
+                            flex items-center justify-center w-full border "
                         >
-                            <ClipLoader color='white' size={20}/>
+                            <Loader2 color='white' className="animate-spin" size={20}/>
                         </div>
                     )
                 }

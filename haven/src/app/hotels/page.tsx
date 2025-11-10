@@ -1,15 +1,14 @@
 "use client"
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 import { useHotelStore } from '@/store/useHotelStore';
 import { useSocketStore } from '@/store/useSocketStore';
 
-import { HashLoader } from 'react-spinners';
 import TopBar from '@/components/TopBar';
 import Filters from '@/components/filters/Filters';
 import NotFoundCard from '@/components/ui/NotFoundCard';
 import HotelCard from '@/components/HotelCard';
-import { SlidersHorizontal } from 'lucide-react';
+import { Loader2, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
@@ -30,6 +29,8 @@ export default function Hotels() {
         onError: onError
     })
 
+
+
     useEffect(() => {
         if (waitingForMessage) {
             document.body.style.overflow = 'hidden';
@@ -38,6 +39,12 @@ export default function Hotels() {
             document.body.style.overflow = 'unset';
         };
     }, [waitingForMessage]);
+
+    const rendered = useRef<boolean>(false);
+
+    useEffect(() => {
+        rendered.current = true;
+    }, []);
 
     return (
         <div className="relative">
@@ -66,24 +73,24 @@ export default function Hotels() {
                         {hotels.map((hotel) => (
                             <HotelCard key={hotel.id} {...hotel} />
                         ))}
-                        {hotels.length === 0 && !loading && !waitingForMessage && 
+                        {hotels.length === 0 && !loading && rendered.current&& !waitingForMessage && 
                         <div className='absolute inset-0'>
                             <NotFoundCard text="we couldn't find any hotels that match your criteria" />
                         </div>}
                     </div>
                 </div>
                 {loading && <div className="fixed inset-0 top-0 left-0 z-50 flex justify-center items-center bg-foreground/50">
-                    <HashLoader />
+                    <Loader2 className='animate-spin' />
                 </div>}
                 {/* Google Maps container */}
-                <div className="hidden lg:block z-10 lg:col-start-8 ml-4 lg:col-span-5">
+                {!loading && rendered.current && <div className="hidden lg:block z-10 lg:col-start-8 ml-4 lg:col-span-5">
                     <div className="sticky top-24 z-20 h-[calc(100vh-6rem)]">
                         <GoogleMaps />
                     </div>
-                </div>
+                </div>}
             </div>
             {waitingForMessage && <div className="fixed inset-0 top-0 left-0 z-50 flex justify-center items-center bg-foreground/50">
-                <HashLoader />
+                <Loader2 className='animate-spin' />
             </div>}
         </div>
     );
