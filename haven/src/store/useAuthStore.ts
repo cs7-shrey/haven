@@ -1,0 +1,103 @@
+import { create } from 'zustand';
+import { axiosInstance } from '@/lib/axiosConfig';
+import { AxiosError, isAxiosError } from 'axios';
+
+interface AuthStore {
+    authUserEmail: string | null;
+    isSigningUp: boolean;
+    isLoggingIn: boolean;
+    isCheckingAuth: boolean;
+    error: string | null;
+    ranOnce: boolean;
+    isLoginPopupOpen: boolean;
+    setAuthUserEmail: (email: string | null) => void;
+    setIsSigningUp: (isSigningUp: boolean) => void;
+    setIsLoggingIn: (isLoggingIn: boolean) => void;
+    setIsCheckingAuth: (isCheckingAuth: boolean) => void;
+    setError: (error: string | null) => void;
+    setRanOnce: (ranOnce: boolean) => void;
+    setIsLoginPopupOpen: (isLoginPopupOpen: boolean) => void;
+}
+
+interface ErrorResponse {
+    detail: string;
+}
+
+export const useAuthStore = create<AuthStore>((set) => ({  
+    authUserEmail: null,
+    isSigningUp: false,
+    isLoggingIn: false,
+    isCheckingAuth: false,
+    error: null,
+    ranOnce: false,
+    isLoginPopupOpen: true,
+    setAuthUserEmail: (email) => set({ authUserEmail: email }),
+    setIsSigningUp: (isSigningUp) => set({ isSigningUp }),
+    setIsLoggingIn: (isLoggingIn) => set({ isLoggingIn }),
+    setIsCheckingAuth: (isCheckingAuth) => set({ isCheckingAuth }),
+    setError:  (error) => set({ error }),
+    setRanOnce: (ranOnce) => set({ ranOnce }),
+    setIsLoginPopupOpen: (isLoginPopupOpen) => set({ isLoginPopupOpen })
+}))
+
+// useAuthStore.subscribe
+
+
+export async function signUp(name: string, email: string, password: string) {
+    const { setIsSigningUp, setError, setAuthUserEmail } = useAuthStore.getState();
+    try {
+        setIsSigningUp(true);
+        const response = await axiosInstance.post('/users/signup', { name, email, password });
+        if (response.status !== 200) {
+            setError(response.data.detail)
+            setAuthUserEmail(null);
+            throw new Error('Failed to sign up');
+        }
+        setAuthUserEmail(email);
+    }
+    // check if error is of type AxiosError
+    catch (error) {
+        if (isAxiosError(error)) {
+            const e = error as AxiosError;
+                const errorMessage = (e.response?.data as ErrorResponse)?.detail || 'Failed to sign up';
+                // const errorMessage = e.response?.data?.detail as string|| 'Failed to sign up';
+                setError(errorMessage);
+                // const ex = new AxiosError();
+        }
+        console.error(error);
+        
+    }
+    finally {
+        setIsSigningUp(false);
+    }
+}
+
+export async function checkAuth() {
+    const { setIsCheckingAuth, setAuthUserEmail, setIsLoginPopupOpen } = useAuthStore.getState();
+    try {
+        setIsCheckingAuth(true);
+        const response = await axiosInstance.get('/users/checkauth');
+        setAuthUserEmail(response.data.email);
+
+        return true;
+    }
+    catch (error) {
+        if(isAxiosError(error)) {
+            const e = error as AxiosError;
+            if (e.response?.status === 401) {
+                setAuthUserEmail(null);
+                setIsLoginPopupOpen(true);
+                return false; 
+            }
+        }
+        console.error(error);
+    }
+    finally {
+        setIsCheckingAuth(false);
+    }
+}
+
+export enum AuthType {
+    LOGIN = "login",
+    SIGNUP = "signup",
+}
