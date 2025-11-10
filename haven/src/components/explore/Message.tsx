@@ -27,7 +27,7 @@ const Message: React.FC<Props> = ({content, sender, isThinking}) => {
                             letterSpacing: '0.5px',
                         }}
                     >
-                        <ReactMarkdown children={content.toLowerCase()} remarkPlugins={[remarkGfm]} />
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{content.toLowerCase()}</ReactMarkdown>
                     </div>
                 }
             </div>

@@ -108,7 +108,7 @@ const PageLayout = () => {
                 <div className='flex flex-col max-w-5xl mx-auto py-4 px-4 bg-white h-full'>
                     {visibleMessages.length === 0 && 
                         <h2 className="text-[4.5rem] text-center mb-6 font-manrope font-[600] ">
-                            let's explore
+                            let{`'`}s explore
                         </h2>
                     }
                     <div className='flex flex-col min-h-fit gap-4'>

@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 
 const NotFound = "/assets/NotFound.svg" 
 const NotFoundCard: React.FC<{
