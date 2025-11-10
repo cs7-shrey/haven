@@ -2,9 +2,8 @@ import React from 'react'
 import { Star } from 'lucide-react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap } from '@fortawesome/free-solid-svg-icons';
-import { StaticImageData } from 'next/image';
 interface Props {
-    imageURL: string | StaticImageData;
+    imageURL: string;
     name: string;
     hotelStars: number;
     address: string;
