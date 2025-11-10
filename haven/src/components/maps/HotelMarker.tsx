@@ -23,7 +23,7 @@ const HotelMarker: React.FC<Props> = ({ price, hotelId }) => {
         <button 
             className={`
                 font-semibold text-[1rem] p-2 rounded-lg shadow-md
-                ${isSelected ? 'bg-primary text-white' : 'bg-primary text-secondary'}
+                ${isSelected ? 'bg-primary text-white' : 'text-primary bg-white'}
                 `}
             onClick={handeClick}
         >

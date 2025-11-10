@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from 'react';
 import { MapPin, Users, Star } from 'lucide-react';
 import { axiosInstance } from '@/lib/axiosConfig';

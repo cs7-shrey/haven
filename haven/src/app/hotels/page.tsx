@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 
 import useHotelSearch from '@/hooks/hotels/useHotelSearch';
 import toast from 'react-hot-toast';
+import GoogleMaps from '@/components/maps/GoogleMaps';
 
 
 export default function Hotels() {
@@ -77,7 +78,7 @@ export default function Hotels() {
                 {/* Google Maps container */}
                 <div className="hidden lg:block z-10 lg:col-start-8 ml-4 lg:col-span-5">
                     <div className="sticky top-24 z-20 h-[calc(100vh-6rem)]">
-                        {/* <GoogleMaps /> */}
+                        <GoogleMaps />
                     </div>
                 </div>
             </div>
