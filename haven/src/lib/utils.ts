@@ -77,7 +77,6 @@ export function setInitialFiltersState(
 }
 
 export function stateInitUsingQueryParams(searchParams: URLSearchParams) {
-    // const [searchParams] = useSearchParams();
     // TODO: optimize redundant checks
     const q = searchParams.get("q");
     const type = searchParams.get("type");

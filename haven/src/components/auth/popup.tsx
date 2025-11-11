@@ -45,7 +45,7 @@ export default function AuthPopup() {
   return (
     <AnimatePresence>
         {isLoginPopupOpen && <motion.div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-md z-50 flex justify-center items-center h-screen w-full"
+            className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex justify-center items-center h-screen w-full"
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             transition={{duration: 0.2, ease: "easeInOut"}}

@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from 'react-hot-toast'
 import AuthPopup from "@/components/auth/popup";
 import { AuthContextProvider } from "@/context/AuthContext";
+import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +34,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <AuthContextProvider>
-          {children}
+          <Suspense fallback={<Loader2 className="animate-spin" />}>
+            {children}
+          </Suspense>
           <Toaster />
           <AuthPopup />
         </AuthContextProvider>

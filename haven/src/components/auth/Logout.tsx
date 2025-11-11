@@ -2,10 +2,11 @@
 import { User } from "lucide-react"
 import { Button } from "../ui/button";
 import { FaUserCircle } from "react-icons/fa";
-import { useAuthStore } from "@/store/useAuthStore";
+import { checkAuth, useAuthStore } from "@/store/useAuthStore";
 import { useAuthContext } from "@/context/AuthContext";
 import { useLogout } from "@/hooks/auth/useLogout";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const Logout: React.FC = () => {
     const { authUserEmail } = useAuthStore();
@@ -14,15 +15,22 @@ const Logout: React.FC = () => {
         onError: (err) => toast.error(err)
     });
     const loggedIn = authUserEmail !== null
+    console.log("Logged in status:", loggedIn);
+    console.log("Auth User Email:", authUserEmail)
     const onClick = () => {
-            const isLoggedIn = authUserEmail !== null;
-            if(!isLoggedIn) {
-              openLoginPopup();
-            }
-            else {
-              logout();
-            }
-          }
+        const isLoggedIn = authUserEmail !== null;
+        if(!isLoggedIn) {
+            openLoginPopup();
+        }
+        else {
+            logout();
+        }
+    }
+
+    useEffect(() => {
+        checkAuth();
+    }, [])
+
     return (
         <Button
             onClick={onClick}

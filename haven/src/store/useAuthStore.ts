@@ -75,9 +75,12 @@ export async function signUp(name: string, email: string, password: string) {
 export async function checkAuth() {
     const { setIsCheckingAuth, setAuthUserEmail, setIsLoginPopupOpen } = useAuthStore.getState();
     try {
+        console.log("Running checkauth")
+
         setIsCheckingAuth(true);
         const response = await axiosInstance.get('/users/checkauth');
         setAuthUserEmail(response.data.email);
+
 
         return true;
     }
