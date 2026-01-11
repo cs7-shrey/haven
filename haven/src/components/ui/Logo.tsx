@@ -1,20 +1,9 @@
-import "./styles/logo.css"
-function LetterDiv({ letter }: { letter: string }) {
-    return (
-        <div className="font-bold px-1 bg-background text-primary rounded-[2]">{letter}</div>
-    );
-}
 const Logo = () => {
     return (
-        <a href={"/"} >
-        <div className="text-xl font-bold flex gap-1 items-center">
-            <LetterDiv letter="H" />
-            <LetterDiv letter="A" />
-            <LetterDiv letter="V" />
-            <LetterDiv letter="E" />
-            <LetterDiv letter="N" />
-            {/* HAVEN */}
-        </div>
+        <a href={"/"} className="group">
+            <div className="text-2xl font-bold tracking-tight flex items-center gap-0.5 transition-all">
+                <span className="text-slate-800 group-hover:text-slate-900 transition-colors">HAVEN</span>
+            </div>
         </a>
     )
 }

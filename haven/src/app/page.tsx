@@ -9,16 +9,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Navigation - Floating, sophisticated */}
-      <nav className="fixed top-0 left-0 right-0 z-50">
+      {/* <nav className="fixed top-0 left-0 right-0 z-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mt-6 backdrop-blur-xl bg-white/80 border border-black/[0.08] rounded-2xl shadow-sm shadow-black/[0.03]">
+          <div className="mt-6 backdrop-blur-xl bg-white/20 border border-black/[0.08] rounded-2xl shadow-sm shadow-black/[0.03]">
             <div className="flex items-center justify-between px-6 lg:px-8 py-4">
               <Logo />
               <Logout />
             </div>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
       {/* Hero Section - Premium spacing and composition */}
       <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-24 pb-16">
@@ -29,7 +29,7 @@ export default function Home() {
             style={{ backgroundImage: `url(/hotel.jpg)` }}
           />
           {/* Gradient overlay for depth and readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
+          <div className="absolute inset-0 bg-black/65" />
           {/* Subtle vignette effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
         </div>
@@ -69,7 +69,7 @@ export default function Home() {
               yOffset={20}
               duration={0.3}
             >
-              <div className="backdrop-blur-2xl bg-white/95 border border-white/20 rounded-3xl shadow-2xl shadow-black/20 p-8 md:p-10 lg:p-12">
+              <div className="backdrop-blur-2xl bg-white/35 border border-white/20 rounded-3xl shadow-2xl shadow-black/20 p-8 md:p-10 lg:p-12">
                 <SearchBar />
               </div>
             </AnimatedContainer>
@@ -77,7 +77,7 @@ export default function Home() {
         </div>
 
         {/* Decorative elements - Subtle sophistication */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-[5]" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-white z-[5]" />
       </div>
 
       {/* Recent Searches - Refined spacing */}
