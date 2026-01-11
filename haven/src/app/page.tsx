@@ -32,7 +32,8 @@ export default function Home() {
           className="md:max-w-[90%] lg:max-w-[80%] flex flex-col gap-4 items-start w-fit bg-primary rounded-lg px-4 md:px-12 py-10"
         >
           <AnimatedContainer 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-sans text-primary-foreground"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-sans text-primary-foreground
+            tracking-tight"
             // style={{ textShadow: "0px 0px 1px black" }}
             yOffset={10}
             duration={0.2}
