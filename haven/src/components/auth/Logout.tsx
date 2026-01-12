@@ -37,7 +37,8 @@ const Logout: React.FC = () => {
 			className={cn("px-6 py-2.5 rounded-xl",
                 "font-medium text-sm border border-slate-700/50 shadow-sm", 
                 "transition-all duration-200 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]",
-                "bg-white/60 hover:bg-white/80 backdrop-blux-3xl"
+                "bg-white/10 backdrop-blux-3xl",
+                "text-white border-white"
             )}
 		>
 			{loggedIn ? (

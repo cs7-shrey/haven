@@ -25,7 +25,7 @@ export default function Home() {
             style={{ backgroundImage: `url(/hotel.jpg)` }}
           />
           {/* Gradient overlay for depth and readability */}
-          <div className="absolute inset-0 bg-black/65" />
+          <div className="absolute inset-0 bg-black/75" />
           {/* Subtle vignette effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
         </div>
@@ -42,7 +42,7 @@ export default function Home() {
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[1.1]">
                 <span className="inline-block">Find hotels</span>
                 {" "}
-                <span className="inline-block bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-400 bg-clip-text text-transparent">
+                <span className="inline-block text-cyan-200">
                   with AI
                 </span>
               </h1>
