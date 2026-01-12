@@ -37,42 +37,36 @@ const SearchBar = () => {
 	};
 
 	return (
-		<div className="flex flex-col sm:flex-row max-w-full bg-white">
-			{/* voice and search input */}
-			<div className="flex max-w-full">
-				{/* voice controls */}
-				<div className="flex">
-					<div className="">
-						<Voice
-							isStreaming={isStreaming}
-							toggleStreaming={toggleStreaming}
-							sourceNodeRef={sourceNodeRef}
-						/>
-					</div>
-					<div className="my-auto">
-						<LanguageButton lang={lang} setLang={setLang} />
-					</div>
-				</div>
-				{/* search input */}
-				<div className="w-84 sm:w-auto sm:min-w-48 md:min-w-48 lg:min-w-52 my-auto px-2">
-					<div className="text-xs text-muted-foreground">
-						Where do you want to stay?
-					</div>
-					<SearchDropdown />
-				</div>
+		<div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-3 w-full">
+			{/* Voice & Language Controls - Grouped */}
+			<div className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-xl border border-slate-200/60">
+				<Voice
+					isStreaming={isStreaming}
+					toggleStreaming={toggleStreaming}
+					sourceNodeRef={sourceNodeRef}
+				/>
+				<div className="h-6 w-px bg-slate-300" />
+				<LanguageButton lang={lang} setLang={setLang} />
 			</div>
-			{/* search, check-in-out and search button */}
-			<div className="flex w-full sm:w-auto">
-				{/* checkin-checkout-search-button */}
-				<div className="flex flex-col sm:flex-row w-full sm:w-auto">
-					<div className="flex my-auto px-2 gap-2 py-4 sm:py-0" id="checkInCheckOut">
-						<Check check={checkIn} setCheck={setCheckIn} label="Check-in" />
-						<Check check={checkOut} setCheck={setCheckOut} label="Check-out" />
-					</div>
-					<div className="w-full sm:w-auto">
-						<SearchButton onClick={onSearchButtonClick} />
-					</div>
-				</div>
+
+			{/* Main Search Input - Prominent */}
+			<div className="flex-1 md:min-w-80 flex flex-col justify-center px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/60">
+				<label className="text-[0.65rem] sm:text-xs text-left font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+					Where do you want to stay?
+				</label>
+				<SearchDropdown />
+			</div>
+
+			{/* Date Selection - Grouped */}
+			<div className="flex flex-1 items-center gap-3 sm:px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/60" id="checkInCheckOut">
+				<Check check={checkIn} setCheck={setCheckIn} label="Check-in" />
+				<div className="h-10 w-px bg-slate-300" />
+				<Check check={checkOut} setCheck={setCheckOut} label="Check-out" />
+			</div>
+
+			{/* Search Button - Call to Action */}
+			<div className="lg:w-auto w-full lg:self-stretch flex items-center">
+				<SearchButton onClick={onSearchButtonClick} />
 			</div>
 		</div>
 	);

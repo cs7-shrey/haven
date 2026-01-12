@@ -22,23 +22,21 @@ const Voice: React.FC<Props> = ({ isStreaming, toggleStreaming, sourceNodeRef })
         }
     }
     return (
-        <div className="flex justify-center bg-background w-fit h-fit py-2">
-            <div className="self-center">
-                <button onClick={onClick} disabled={false} className="focus:outline-none">
-                    <div className="h-12 w-16 rounded-full flex flex-col justify-start items-center" id="container">
-                        <div className="h-10 w-20 flex justify-center items-end">
-                            {!isStreaming ? 
-                                <Mic size={24}/> :
-                                <Audiomotion sourceNode={sourceNodeRef.current} isStreaming={isStreaming} />
-                            }
-                        </div>
-                        <div className="text-black/55 text-sm text-wrap p-1">
-                            {isStreaming ? "Listening..." : "Speak"}
-                        </div>
-                    </div>
-                </button>
+        <button 
+            onClick={onClick} 
+            disabled={false} 
+            className="group flex flex-col items-center gap-1 px-1 hover:opacity-80 transition-opacity focus:outline-none"
+        >
+            <div className="flex items-center justify-center w-9 h-9 rounded-full bg-white border border-slate-200 group-hover:border-slate-300 transition-colors shadow-sm">
+                {!isStreaming ? 
+                    <Mic size={18} className="text-slate-700" /> :
+                    <Audiomotion sourceNode={sourceNodeRef.current} isStreaming={isStreaming} />
+                }
             </div>
-        </div>
+            <span className="text-[10px] font-medium text-slate-500">
+                {isStreaming ? "Listening" : "Speak"}
+            </span>
+        </button>
     );
 };
 
