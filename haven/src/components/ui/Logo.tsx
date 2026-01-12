@@ -2,7 +2,7 @@ const Logo = () => {
     return (
         <a href={"/"} className="group">
             <div className="text-2xl font-bold tracking-tight flex items-center gap-0.5 transition-all">
-                <span className="text-slate-800 group-hover:text-slate-900 transition-colors">HAVEN</span>
+                <span className="text-white/60 group-hover:text-slate-900 transition-colors">HAVEN</span>
             </div>
         </a>
     )

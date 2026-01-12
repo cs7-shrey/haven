@@ -50,15 +50,15 @@ const SearchBar = () => {
 			</div>
 
 			{/* Main Search Input - Prominent */}
-			<div className="grow-1 min-w-0 flex flex-col justify-center px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/60">
-				<label className="text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+			<div className="flex-1 md:min-w-80 flex flex-col justify-center px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/60">
+				<label className="text-[0.65rem] sm:text-xs text-left font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
 					Where do you want to stay?
 				</label>
 				<SearchDropdown />
 			</div>
 
 			{/* Date Selection - Grouped */}
-			<div className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/60" id="checkInCheckOut">
+			<div className="flex flex-1 items-center gap-3 sm:px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/60" id="checkInCheckOut">
 				<Check check={checkIn} setCheck={setCheckIn} label="Check-in" />
 				<div className="h-10 w-px bg-slate-300" />
 				<Check check={checkOut} setCheck={setCheckOut} label="Check-out" />

@@ -14,7 +14,7 @@ const LanguageButton: React.FC<Props> = ({lang, setLang}) => {
     return (
         <div className='relative'>
             <Button 
-                className='group px-2 py-1 h-auto rounded-lg hover:opacity-80 transition-opacity flex flex-col items-center gap-1 bg-transparent text-slate-700 font-medium border-0 shadow-none'
+                className='group px-2 py-1 h-auto rounded-lg hover:opacity-80 hover:bg-transition-opacity flex flex-col items-center gap-1 bg-transparent text-slate-700 font-medium border-0 shadow-none'
                 onClick={() => setShowDropdown((prev) => !prev)}
             >
                 <div className="flex items-center justify-center w-9 h-9 rounded-full bg-white border border-slate-200 group-hover:border-slate-300 transition-colors shadow-sm">

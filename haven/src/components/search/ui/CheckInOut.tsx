@@ -8,8 +8,8 @@ interface CheckProps {
 
 export const Check: React.FC<CheckProps> = ({check, setCheck, label}) => {
     return (
-        <div className='flex flex-col gap-1.5 min-w-[130px]'>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+        <div className='flex flex-col gap-1.5 w-auto px-1 sm:min-w-[130px]'>
+            <label className="text-[0.65rem] sm:text-xs font-semibold text-slate-500 uppercase tracking-wide">
                 {label}
             </label>
             <input
