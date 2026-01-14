@@ -25,7 +25,7 @@ export default function Home() {
             style={{ backgroundImage: `url(/hotel.jpg)` }}
           />
           {/* Gradient overlay for depth and readability */}
-          <div className="absolute inset-0 bg-black/75" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/25" />
           {/* Subtle vignette effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
         </div>
@@ -39,10 +39,12 @@ export default function Home() {
               yOffset={10}
               duration={0.2}
             >
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[1.1]">
+              <h1 className="sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[1.1]
+              text-6xl [text-shadow:_0_4px_20px_rgb(0_0_0_/_0.3)] 
+              ">
                 <span className="inline-block">Find hotels</span>
                 {" "}
-                <span className="inline-block text-cyan-200">
+                <span className="">
                   with AI
                 </span>
               </h1>
@@ -65,7 +67,7 @@ export default function Home() {
               yOffset={20}
               duration={0.3}
             >
-              <div className="backdrop-blur-2xl bg-white/85 border border-white/20 rounded-3xl shadow-2xl shadow-black/20 p-4 md:p-10 lg:p-12">
+              <div className="backdrop-blur-2xl bg-white/55 border border-white/20 rounded-3xl shadow-2xl shadow-black/20 p-4 md:p-10 lg:p-12">
                 <SearchBar />
               </div>
             </AnimatedContainer>
