@@ -25,7 +25,7 @@ export default function Home() {
             style={{ backgroundImage: `url(/hotel.jpg)` }}
           />
           {/* Gradient overlay for depth and readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/55 to-black/10" />
           {/* Subtle vignette effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
         </div>
@@ -33,19 +33,13 @@ export default function Home() {
         {/* Main content container */}
         <div className="relative z-10 w-full mx-auto px-6 lg:px-8">
           <div className="flex flex-col items-center text-center space-y-8">
-            {/* Heading - Premium typography */}
-            <AnimatedContainer 
-              className="max-w-4xl"
-              yOffset={10}
-              duration={0.2}
-            >
-              <h1 className="sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[1.1]
-              text-6xl [text-shadow:_0_4px_20px_rgb(0_0_0_/_0.3)] 
-              ">
-                <span className="inline-block">Find hotels</span>
-                {" "}
-                <span className="">
-                  with AI
+            {/* Heading Section */}
+            <AnimatedContainer className="max-w-5xl" yOffset={10} duration={0.2}>
+              <h1 className="text-5xl sm:text-7xl md:text-8xl font-semibold text-white tracking-tight leading-[1.05] [text-shadow:_0_8px_30px_rgb(0_0_0_/_0.4)]">
+                <span className="opacity-95 font-light">Find hotels</span>
+                <br className="sm:hidden" />
+                <span className="font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-200 to-blue-100 drop-shadow-[0_0_15px_rgba(165,243,252,0.4)]">
+                  {" "}with AI
                 </span>
               </h1>
             </AnimatedContainer>
